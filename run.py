@@ -2,7 +2,10 @@
 # Description: Entry point to the app
 
 from flask import Flask
-app = Flask(__name__)
+app = Flask(__name__,
+            static_url_path='',
+            static_folder='app/static',
+            template_folder='app/templates')
 
 from app.views import home
 
