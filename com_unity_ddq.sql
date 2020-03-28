@@ -12,10 +12,10 @@ SET FOREIGN_KEY_CHECKS = 1;
 CREATE TABLE Messages (
   message_id INT AUTO_INCREMENT PRIMARY KEY UNIQUE NOT NULL,
   message_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  mood VARCHAR(191) NOT NULL,
-  name VARCHAR(255),
-  age INT,
-  location VARCHAR(255)
+  user_mood VARCHAR(191) NOT NULL,
+  user_name VARCHAR(255),
+  user_age INT,
+  user_location VARCHAR(255)
 )ENGINE=InnoDB;
 
 
