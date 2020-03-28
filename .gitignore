@@ -1,2 +1,11 @@
 **/*.pyc
+.DS_Store
+*.DS_Store
+**/.DS_Store
+.env
+*.env
+**/.env
 venv/
+.venv/
+*.venv/
+**/.venv
