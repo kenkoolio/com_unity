@@ -14,11 +14,14 @@ sys.path.insert(0, parent_dir_path)
 from db_connector.db_connector import connect_to_database, execute_query
 
 
-@app.route('/')
-def hello():
-    return "Hello World";
+# @app.route('/hello')
+# def hello():
+#     return "Hello World";
 
-@app.route('/test')
+# @app.route('/test')
+# def test():
+#     return render_template('test.html')
+
+@app.route('/')
 def test():
-    db_conn = connect_to_database()
-    return render_template('test.html')
+    return render_template('index.html')
