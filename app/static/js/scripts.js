@@ -3,7 +3,7 @@ let rec_symbol = document.getElementById("record_symbol");
 
 
 //record button toggle on and off
-$( "#record_button" ).click(function() {
+$( "#record_button" ).on('click touchend', function() {
 	if($( "#record_button" ).hasClass("btn btn-danger")){
 		$( "#record_button" ).removeClass("btn btn-danger");
 		$( "#record_button" ).addClass("btn btn-info");
