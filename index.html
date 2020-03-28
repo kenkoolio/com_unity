@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<!-- Cellular Phone Point of Sales System -->
+	<title>com_unity</title>
+	<!-- bootstrap 3.3 -->
+	<link
+  	rel="stylesheet"
+  	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+  	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+  	crossorigin="anonymous">
+  	<!-- proprietary stylesheet-->
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<!-- bootstrap js -->
+	<script
+  	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+  	defer></script>
+  	<!-- jquery -->
+	<script
+	src="https://code.jquery.com/jquery-3.4.1.js"
+	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+	crossorigin="anonymous"></script>
+	<!-- proprietary js script-->
+	<script src="scripts.js" defer></script>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+  	<div class="container">
+  		<div class="navbar-header">
+  			<a href="index.html" class="navbar-brand"><span class="glyphicon glyphicon-music" aria-hidden="true"></span> com_unity</a>
+  		</div>
+  		<ul class="nav navbar-nav navbar-right">
+  			<li><a data-toggle="modal" data-target="#updateModal">Record</a></li>
+  			<li><a href="/about">About</a></li>
+  		</ul>
+  	</div>
+  </nav>
+
+
+
+ <!-- Modal -->
+  <div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="updateModal" role="dialog">
+     <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+           <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Record Voice</h4>
+           </div>
+           <div class="modal-body">
+              <div class="container">
+                 <div class="container">
+                    <div class="row">
+                       <div class="col-lg-1">
+                       	MOOD
+                          <select id="mood_dropdown">
+                          	  <option value="happy">&#128522</option>
+							  <option value="sad">&#128546</option>
+							  <option value="angry">&#128544</option>
+							  <option value="heart">&#128525</option>
+							  <option value="funny">&#128518</option>                          	
+                          </select>
+                       </div>
+                    </div>
+                    <br>
+	               <div class="row">
+	                  <div class="col-lg-1">
+	                     NAME<input type="text" name="" required><br>
+	                  </div>
+	                  <div class="col-lg-1 col-lg-offset-2">
+	                     AGE<input type="text" name="" required><br>
+	                  </div>
+	               </div>
+
+                    <br>
+
+                    <div class="row">
+                       <div class="col-lg-1">
+                          LOCATION<input type="text" name=""><br>
+                       </div>
+                    </div>
+
+                    <br>
+
+                    <div class="row">
+	                  <div class="col-lg-2">
+	                     <button id="record_button" class="btn btn-danger">
+	                     <span id="record_symbol" class="glyphicon glyphicon-record"></span> Rec
+			        	 </button><br>
+	                  </div>
+	                  <div class="col-lg-2">
+	                     <audio controls=""></audio>
+	                  </div>
+	               </div>
+
+                 </div>
+              </div>
+              <div class="modal-footer">
+                 <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">SUBMIT</button>
+                 <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">CLOSE</button>
+              </div>
+           </div>
+        </div>
+     </div>
+  </div>
+
+<!-- timeline -->
+<!-- <div id="timeline" class="timeline"> -->
+	
+
+
+</div>
+
+
+
+</body>
+</html>
