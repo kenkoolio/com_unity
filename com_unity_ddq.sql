@@ -5,11 +5,10 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP SCHEMA IF EXISTS `com_unity`;
 CREATE SCHEMA `com_unity`;
 USE `com_unity`;
--- DROP TABLE IF EXISTS `Messages`;
 SET FOREIGN_KEY_CHECKS = 1;
 
 
--- Message meta data
+-- Message meta data table
 CREATE TABLE Messages (
   message_id INT AUTO_INCREMENT PRIMARY KEY UNIQUE NOT NULL,
   message_date DATETIME NOT NULL,
@@ -20,7 +19,7 @@ CREATE TABLE Messages (
 )ENGINE=InnoDB;
 
 
--- Message voice recording
+-- Message voice recording table
 CREATE TABLE Voices (
   message_id INT PRIMARY KEY UNIQUE NOT NULL,
   voice_message MEDIUMBLOB NOT NULL,
