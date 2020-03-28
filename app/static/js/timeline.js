@@ -1,6 +1,13 @@
 
 // <reference path="./p5.d.ts" />
 
+// hack code to scoot the timeline down under the above dom element
+var navbar = document.getElementById("navbar");
+var body = navbar.parentNode;
+var padding = navbar.offsetHeight;
+body.style.paddingTop = String(padding) + "px";
+
+
 var first = true; // draw once and then wait for mouse press.
 var timelineHeight = 80;
 var selectorUpper;
@@ -21,8 +28,8 @@ function setup() {
     // create selectors
     let pu = windowWidth/2;
     let pl = windowWidth/2;
-    selectorLower = new Selector(pu, 10, 0.5, 0.5);
-    selectorUpper = new Selector(pl, timelineHeight - 10, timelineHeight - 0.5, timelineHeight - 0.5)
+    selectorLower = new Selector(pu, 15, 0.5, 0.5);
+    selectorUpper = new Selector(pl, timelineHeight - 15, timelineHeight - 0.5, timelineHeight - 0.5)
 
 }
 
@@ -52,7 +59,7 @@ class Selector {
 
         fill(color('black'));
         stroke(color('black'));
-        triangle(this.tipX, this.tipY, this.tipX - 5, this.y2, this.tipX + 5, this.y3)
+        triangle(this.tipX, this.tipY, this.tipX - 7.5, this.y2, this.tipX + 7.5, this.y3)
         line(this.tipX, 0, this.tipX, timelineHeight)
     }
 }
@@ -91,13 +98,11 @@ function mouseReleased(){
 function touchStarted()
 {
     mousePressed();
-    return false;
 }
 // same as mouseReleased
 function touchEnded()
 {
     mouseReleased();
-    return false;
 }
 //////////////////// end of mouse event handling
 
