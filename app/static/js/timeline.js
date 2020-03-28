@@ -13,6 +13,7 @@ var timelineHeight = 80;
 var lineBorderPixels = 10;
 var selectorUpper;
 var selectorLower;
+var gradient;
 var dateLine;
 var dragging = false; // true when mouse dragging in process.
 var startX = 0; // to track mouse dragging
@@ -20,6 +21,7 @@ var selectLock = null; // when null, allows items to be selected and dragged. Wh
 
 var visibleMinDate;
 var zoomLevel = 1; // 1 = close enough to view individual days clearly, 2 = months view, 3 = years view, 4 = decades view
+const zoom1SegmentWidth = 6;
 
 
 function setup() {
@@ -29,23 +31,39 @@ function setup() {
     cnv = createCanvas(windowWidth, timelineHeight);
     cnv.parent('timeline'); // dom element with ID = timeline
 
+    // create gradient for fun
+    gradient = createGraphics(windowWidth, timelineHeight);
+    gradient.background(color('rgba(255, 255, 255, 0)')); // clear
+    setXGradient(gradient, 0, 0, windowWidth / 9, timelineHeight, color('rgba(25, 25, 25, 1)'), color('rgba(25, 25, 25, 0)'));
+    setXGradient(gradient, windowWidth - windowWidth / 9, 0, windowWidth / 9, timelineHeight, color('rgba(25, 25, 25, 0)'), color('rgba(25, 25, 25, 1)'));
+
     // create selectors
-    let pu = windowWidth/2 - 6;
-    let pl = windowWidth/2;
+    const segmentBorderMiddle = Math.floor(windowWidth / 2 / zoom1SegmentWidth) * zoom1SegmentWidth + 1.5;
+    let pu = segmentBorderMiddle - zoom1SegmentWidth;
+    let pl = segmentBorderMiddle;
     selectorLower = new Selector(pu, 15, 0.5, 0.5);
     selectorUpper = new Selector(pl, timelineHeight - 15, timelineHeight - 0.5, timelineHeight - 0.5)
 
     // create the dateline
     let today = new Date();
     let daysVisible = width / 6;
-    today = addDays(today, -1 * daysVisible)
-    let mindate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    let minDate = addDays(today, -1 * daysVisible)
+    //let mindate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
     
-    today = addDays(today, 2 * daysVisible)
-    let maxdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    dateLine = new DateLine(mindate, maxdate);
-    console.log(mindate);
-    console.log(maxdate);
+    let maxDate = addDays(today, 2 * daysVisible)
+    //let maxdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    dateLine = new DateLine(minDate, maxDate);
+}
+
+function setXGradient(image, x, y, w, h, color1, color2, axis) { // borrowed from https://p5js.org/examples/color-linear-gradient.html
+    image.noFill();
+    // Left to right gradient
+    for (let i = x; i <= x + w; i++) {
+        let inter = map(i, x, x + w, 0, 1);
+        let c = lerpColor(color1, color2, inter);
+        image.stroke(c);
+        image.line(i, y, i, y + h);
+    }
 }
 
 function addDays(date, days) {
@@ -63,6 +81,7 @@ class Selector {
         this.snagged = false;
 
         this.clickDiameter = 15;
+        this.lastStepDragged = false;
     }
 
     dragMod(draggingMouseX, draggingMouseY)
@@ -73,11 +92,27 @@ class Selector {
 
         if ((selectLock == null || selectLock == this) && (this.snagged == true || dist(this.tipX, this.tipY, draggingMouseX, draggingMouseY) < this.clickDiameter))
         {
-            this.tipX = draggingMouseX;
+            this.tipX = draggingMouseX - 0.5;
             this.snagged = true;
 
             selectLock = this;
+            this.lastStepDragged = true;
         }
+        else
+        {
+            if (this.lastStepDragged)
+            {
+                // perform snapping
+                if (zoomLevel == 1)
+                {
+                    this.tipX = Math.floor(this.tipX / zoom1SegmentWidth) * zoom1SegmentWidth + 0.5;
+                }
+
+                // if on-top of another selector, snap to next line.
+
+                this.lastStepDragged = false;
+            }
+        }            
     }
 
     show() {
@@ -95,14 +130,26 @@ class DateLine {
         this.y = 0;
         this.dateLow = dateLow;
         this.dateHigh = dateHigh;
+        this.lastStepDragged = false;
         
-        // this will hold the static image of the dateline, so that it can be dragged. Only redrawn when dragging is over.
-        this.image = createGraphics(width * 3, timelineHeight);
-
-        this.addMarks();
+        this.recreate();
     }
 
-    addMarks() {
+    recreate(update = false) {
+        // if this.x is not original, then we must have dragged, calculate new dates if forced to do so
+        if (update)
+        {
+            if (zoomLevel == 1)
+            {
+                const daysChanged = (this.x + width)/zoom1SegmentWidth;
+                this.dateLow = addDays(this.dateLow, -daysChanged);
+                this.dateHigh = addDays(this.dateHigh, -daysChanged);
+            }
+            this.x = -width;
+        }
+        const cleanSegmentWidth = Math.floor(width / zoom1SegmentWidth) * zoom1SegmentWidth * 3;
+        this.image = createGraphics(cleanSegmentWidth, timelineHeight);
+
         let dl = this.image;
         let currDate = new Date(this.dateLow);
         let currPixel = 0.5; // if stroke weight is odd, you must offset by half pixel to fill pixel.
@@ -113,8 +160,8 @@ class DateLine {
         let month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
         if (zoomLevel == 1) { // days view
             //const formatter = new Intl.DateTimeFormat('en', { month: 'short' });
-            // one day per 6 pixels
-            for(; currPixel < dl.width; currPixel+=6) 
+            // one day per zoom1SegmentWidth pixels
+            for(; currPixel < dl.width; currPixel += zoom1SegmentWidth) 
             {
                 
                 // if day 0 of year, add year tag and long tick
@@ -143,9 +190,9 @@ class DateLine {
                 else{
                     dl.line(currPixel, timelineHeight - lineBorderPixels * 2, currPixel, timelineHeight - lineBorderPixels);
                 }
-                console.log(currDate.getMonth());
-                console.log(currDate.getDate());
-                console.log(currDate);
+                // console.log(currDate.getMonth());
+                // console.log(currDate.getDate());
+                // console.log(currDate);
                 currDate = addDays(currDate, 1);
             }
         }
@@ -157,7 +204,11 @@ class DateLine {
 
             this.x = this.x + draggingMouseX - startX;
             startX = draggingMouseX;
+
+            this.lastStepDragged = true;
         }
+        else
+            this.lastStepDragged = false;
         
         image(this.image, this.x, this.y);
     }
@@ -213,7 +264,6 @@ function touchEnded()
 //////////////////// end of mouse event handling
 
 // main drawing loop. Canvas is blanked between draws and redrawn.
-var lastStepDragged = false;
 function draw() {
     let mx, my = -99; // last mouse position while dragging, set here to bogus value.
     if(dragging) {
@@ -221,17 +271,20 @@ function draw() {
         my = mouseY;
     }
 
-    if (dragging || first) { // prevent unnecessary redraws.
-        lastStepDragged = true;
+    if (dragging || first || dateLine.lastStepDragged || selectorLower.lastStepDragged || selectorUpper.lastStepDragged) { // prevent unnecessary redraws.
         first = false;
         stroke(0);
         fill(0);
         background(240);
 
-        // mod selectors if dragging. This will also lock the dragger if selected.
+        // mod selectors if dragging or we need to snap to a tic after a drag. This will also lock the dragger if selected.
         selectorLower.dragMod(mx, my);
         selectorUpper.dragMod(mx, my);
         
+        if (!dragging && dateLine.lastStepDragged)
+        {
+            dateLine.recreate(true);
+        }
         drawDateLine(mx);
 
         // draw selectors
@@ -242,6 +295,7 @@ function draw() {
         stroke('rgba(0,0,0, 0.1)');
         rect(selectorUpper.tipX, selectorUpper.tipY, selectorLower.tipX - selectorUpper.tipX, selectorLower.tipY - selectorUpper.tipY);
 
+        // shade with gradient to make it seem like a round dial
+        image(gradient, 0, 0);
     }
-        
 }
