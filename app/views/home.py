@@ -4,10 +4,14 @@
 from __main__ import app
 from flask import render_template
 
-@app.route('/')
-def hello():
-    return "Hello World";
+# @app.route('/hello')
+# def hello():
+#     return "Hello World";
 
-@app.route('/test')
+# @app.route('/test')
+# def test():
+#     return render_template('test.html')
+
+@app.route('/')
 def test():
-    return render_template('test.html')
+    return render_template('index.html')
