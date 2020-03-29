@@ -14,10 +14,10 @@ sys.path.insert(0, parent_dir_path)
 from db_connector.db_connector import connect_to_database, execute_query
 
 
-def create_new_message_and_voice(req_data = None):
+def create_new_message_and_voice(data = None):
     '''
     Creates a new message and voice row in the database.
-    Args: req_data (object): request object from front end input form including:
+    Args: data (object): request object from front end input form including:
             mood (int): required
             audio (binary blob): required
             name (str): optional
@@ -26,22 +26,23 @@ def create_new_message_and_voice(req_data = None):
     Returns: None
     '''
     try:
-        if not req_data:
+        if not data:
             raise Exception('Create New Message Error: Data required to insert new voice message')
 
         now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        mood = req_data['mood']     #required
-        audio = req_data['audio']   #required
-        name = req_data['name']
-        age = req_data['age']
-        location = req_data['location']
+        mood = data['mood']     #required
+        audio = data['audio']   #required
+        url = data['url']       #required
+        name = data['name']
+        age = data['age']
+        location = data['location']
 
         # connect to db
         db_conn = connect_to_database()
 
         # form query string with optional fields to insert new message data
-        query = 'INSERT INTO messages (message_date, user_mood, user_name, user_age, user_location) \
-                VALUES ("{}", {}'.format(now, mood)
+        query = 'INSERT INTO messages (message_date, message_url, user_mood, user_name, user_age, user_location) \
+                VALUES ("{}", "{}", {}'.format(now, url, mood)
 
         if name:
             query += ', "{}"'.format(name)
