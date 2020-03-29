@@ -437,7 +437,7 @@ function appendCellOfType(parent, type, label) {
 }
 
 function firePlayer(entryName) {
-    $('#saved_audio').attr("src", entryName);
+    $('#saved_audio').attr("src", "static/" + entryName);
 }
 
 function refreshMessages () {
