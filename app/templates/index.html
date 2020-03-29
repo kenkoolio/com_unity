@@ -47,7 +47,7 @@
 
 
  <!-- Modal -->
-  <!-- <div class="container"> -->
+  <div class="container">
   <!-- Modal -->
   <div class="modal fade" id="updateModal" role="dialog">
      <div class="modal-dialog">
@@ -162,20 +162,19 @@
    <!-- <div> -->
      <!-- search bar -->
      <div class="row pull-right input-group">
-       <span class="glyphicon glyphicon-search table-search-icon"></span>
-       <input class="table-search" type="text" placeholder="search...">
+       <!-- <span class="glyphicon glyphicon-search table-search-icon"></span> -->
+       <!-- <input class="table-search" type="text" placeholder="search..."> -->
      </div>
 
       <!-- Text Messages -->
+      <div class="cont">
       <table class="text_message">
+        <tbody>
         {% for entry in rows %}
         <tr>
           <td class="mood">&#{{ entry[2] }}</td>
           <td>
             <p class="from-me">
-              <table>
-                <tr>
-                  <td>
               {{ entry[1] }}<br />
               {% if entry[3] %}
               {{ entry[3] }},
@@ -184,20 +183,19 @@
               {% endif %}
               age {{ entry[4] }}<br />
               {{ entry[5] }}<br />
-                  </td>
-                  <td>
-                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Play Audio</button>
-                  </td>
-              </table>
             </p>
           </td>
+          <td>
+            <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Play Audio</button>
+          </td>
         </tr>
+        </tbody>
         {% endfor %}
       </table>
-      
+      </div>
 
       <!-- table -->
-      <table class="table table-hover table-bordered">
+<!--       <table class="table table-hover table-bordered">
          <thead align="Center">
             <tr>
                <th>Date</th>
@@ -210,19 +208,19 @@
          </thead>
          <tbody class="table-searchable">
             {% for entry in rows %}
-            <tr>
+            <tr> -->
               <!-- Date -->
-              <td>{{ entry[1] }}</td>
+              <!-- <td>{{ entry[1] }}</td> -->
               <!-- Emoji -->
-              <td>&#{{ entry[2] }}</td> 
+              <!-- <td>&#{{ entry[2] }}</td>  -->
               <!-- Name -->
-              <td>{{ entry[3] }}</td>
+              <!-- <td>{{ entry[3] }}</td> -->
               <!-- Age -->
-              <td>{{ entry[4] }}</td>
+              <!-- <td>{{ entry[4] }}</td> -->
               <!-- Location -->
-              <td>{{ entry[5] }}</td>
-            </tr>
-            {% endfor %}
+              <!-- <td>{{ entry[5] }}</td> -->
+            <!-- </tr> -->
+            <!-- {% endfor %} -->
 <!--             <tr>
                <td>&#128522</td>
                <td align="center">&#128522</td>
@@ -240,11 +238,11 @@
                <td>OR</td>
                <td><button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Play</button></td>
             </tr> -->
-               <td align="center"><button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Play Audio</button></td>
+<!--                <td align="center"><button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Play Audio</button></td>
             </tr>
          </tbody>
       </table>
-      <br>
+      <br> -->
     <!-- </div> -->
  <!-- </div> -->
 <!-- </div> -->
