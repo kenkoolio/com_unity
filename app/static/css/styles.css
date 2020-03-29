@@ -39,6 +39,7 @@ p {
   }
 }
 
+/* Adapted from: https://codepen.io/samuelkraft/pen/Farhl*/
 .from-me {
   color:white; 
   background:#0B93F6;
@@ -90,7 +91,14 @@ td {
   padding-right: 5px;
 }
 
-table {
+.modal_table {
+  margin-top: auto;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+.text_message {
   margin-top: auto;
   margin-left: auto;
   margin-right: auto;
@@ -348,4 +356,3 @@ article{
 		background-position: 50px 50px;
 	}
 }
-

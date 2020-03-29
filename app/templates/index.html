@@ -57,7 +57,7 @@
           <div class="modal-body">
             <form enctype="multipart/form-data" id="recordMessageForm" name="recordMessageForm">
               <div class="row">
-                <table>
+                <table class="modal_table">
                   <tr>
                     <td>
                       <div id="rec_start_view">
@@ -154,6 +154,7 @@
         <tr>
           <td class="mood">&#{{ entry[3] }}</td>
           <td>
+            <!-- p class adapted from: https://codepen.io/samuelkraft/pen/Farhl -->
             <p class="from-them">
               {{ entry[1].strftime('%m/%d/%Y, %I:%M %p') }}<br />
               {% if entry[4] %}
