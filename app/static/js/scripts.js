@@ -7,9 +7,20 @@ function upload(blob) {
           console.log("Server returned: ",e.target.responseText);
       }
   };
-  var fd=new FormData();
-  fd.append("test.ogg",blob);
-  xhr.open("POST","/",true);
+
+  let fake_form = {
+    'mood': 1,
+    'name': 'kk',
+    'age': 1,
+    'location': 'vanderland'
+  }
+
+  let form = document.getElementById('recordMessageForm');
+
+  var fd=new FormData(form);
+
+  fd.append("audio", blob, "test.ogg");
+  xhr.open("POST","/messages",true);
   xhr.send(fd);
 }
 
@@ -61,15 +72,21 @@ navigator.mediaDevices.getUserMedia(constraint)
     //connect the media stream to the first video element
     audio.srcObject = stream;
     let mediaRecorder = new MediaRecorder(stream);
-        
+
     //start recording on clicking start button
     start.addEventListener('click', (ev)=>{
         mediaRecorder.start();
+
+        // prevent form submit
+        ev.preventDefault();
     })
 
     //stop recording on clicking stop button
     stop.addEventListener('click', (ev)=>{
         mediaRecorder.stop();
+
+        // prevent form submit
+        ev.preventDefault();
     });
 
     //storing stream data into chunks array
@@ -86,6 +103,6 @@ navigator.mediaDevices.getUserMedia(constraint)
 
 })
 //Error Handling
-.catch(function(err) { 
-    console.log(err.name, err.message); 
+.catch(function(err) {
+    console.log(err.name, err.message);
 });

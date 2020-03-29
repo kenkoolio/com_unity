@@ -45,7 +45,8 @@ def save_message():
         # get request data and send it to biz layer
         db_home.create_new_message_and_voice(request.get_json())
 
-        return redirect('/')
+        return jsonify({'status': 'testing'})
+        # return redirect('/')
     except Exception as e:
         print('Error: Trying to post new voice message to timeline: {}'.format(e))
 

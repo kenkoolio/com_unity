@@ -60,6 +60,7 @@
            <div class="modal-body">
               <div class="container">
                  <div class="container">
+                   <form id="recordMessageForm">
                     <div class="row">
                        <div class="col-lg-1">
                        	MOOD
@@ -75,7 +76,7 @@
                     <br>
 	               <div class="row">
 	                  <div class="col-lg-1">
-	                     NAME<input type="text" name="name" required><br>
+	                     NAME<input type="text" name="name"><br>
 	                  </div>
 	               </div>
 
@@ -83,7 +84,7 @@
 
                   <div class="row">
                     <div class="col-lg-1">
-                       AGE<input type="text" name="age" required><br>
+                       AGE<input type="text" name="age"><br>
                     </div>
                   </div>
 
@@ -91,33 +92,34 @@
 
                     <div class="row">
                        <div class="col-lg-1">
-                          LOCATION<input type="location" name=""><br>
+                          LOCATION<input type="text" name="location"><br>
                        </div>
                     </div>
 
                     <br>
         <!-- record buttons -->
                     <div class="row">
-	                  <div id="rec_start_view" class="col-lg-2">
-	                     <button id="btnStart" class="btn btn-danger">
-	                     <span id="record_symbol" class="glyphicon glyphicon-record"></span> Rec
-			        	       </button><br>
-	                  </div>
-                    <div id="rec_stop_view" class="col-lg-2" hidden>
-                       <button id="btnStop" class="btn btn-info">
-                       <span id="record_symbol" class="glyphicon glyphicon-stop"></span> Stop
-                       </button><br>
-                    </div>
-                    <br>
-                    <br>
-                    <br>
+  	                  <div id="rec_start_view" class="col-lg-2">
+  	                     <button id="btnStart" class="btn btn-danger">
+  	                     <span id="record_symbol" class="glyphicon glyphicon-record"></span> Rec
+  			        	       </button><br>
+  	                  </div>
+                      <div id="rec_stop_view" class="col-lg-2" hidden>
+                         <button id="btnStop" class="btn btn-info">
+                         <span id="record_symbol" class="glyphicon glyphicon-stop"></span> Stop
+                         </button><br>
+                      </div>
+                      <br>
+                      <br>
+                      <br>
 
-	                  <div>
-                       <audio controls hidden></audio>
-	                     <audio id = 'save' controls="" name='audio'></audio>
-	                  </div>
-	               </div>
+  	                  <div>
+                         <audio controls hidden></audio>
+  	                     <audio id = 'save' controls="" name='audio'></audio>
+  	                  </div>
+	                   </div>
 
+                  </form>
                  </div>
               </div>
               <div class="modal-footer">
