@@ -31,19 +31,15 @@
 </head>
 <body>
 
-  <!-- Navbar -->
-  <nav id="navbar" class="navbar navbar-inverse navbar-fixed-top">
-  	<div class="container-fluid">
-  		<div class="navbar-header">
-  			<a href="/" class="navbar-brand"><span class="glyphicon glyphicon-music" aria-hidden="true"></span> com_unity</a>
-  		</div>
-  		<ul class="nav navbar-nav navbar-right">
-  			<li><a data-toggle="modal" data-target="#updateModal">Record</a></li>
-  			<li><a href="/">About</a></li>
-  		</ul>
-  	</div>
-  </nav>
-
+    <!-- Top Navigation Menu -->
+    <div class="top_nav">
+        <div>
+            <a class="lineleft" href="/">Com Unity</a>
+            <a class="lineright" href="/">About</a>
+            <a class="lineright" data-toggle="modal" data-target="#updateModal">Record</a>
+        </div>
+        <div id="timeline"></div>
+      </div>
 
 
  <!-- Modal -->
@@ -161,12 +157,8 @@
    <!-- <h2 class="page-heading">Capsule Log</h2> -->
    <!-- <div> -->
      <!-- search bar -->
-     <div class="row pull-right input-group">
-       <!-- <span class="glyphicon glyphicon-search table-search-icon"></span> -->
-       <!-- <input class="table-search" type="text" placeholder="search..."> -->
+     <!-- <div class="row pull-right input-group">
      </div>
-
-      <!-- Text Messages -->
       <div class="cont">
       <table class="text_message">
         <tbody>
@@ -192,60 +184,10 @@
         </tbody>
         {% endfor %}
       </table>
-      </div>
+      </div> -->
 
-      <!-- table -->
-<!--       <table class="table table-hover table-bordered">
-         <thead align="Center">
-            <tr>
-               <th>Date</th>
-               <th>Mood</th>
-               <th>Name</th>
-               <th>Age</th>
-               <th>Location</th>
-               <th>Audio</th>
-            </tr>
-         </thead>
-         <tbody class="table-searchable">
-            {% for entry in rows %}
-            <tr> -->
-              <!-- Date -->
-              <!-- <td>{{ entry[1] }}</td> -->
-              <!-- Emoji -->
-              <!-- <td>&#{{ entry[2] }}</td>  -->
-              <!-- Name -->
-              <!-- <td>{{ entry[3] }}</td> -->
-              <!-- Age -->
-              <!-- <td>{{ entry[4] }}</td> -->
-              <!-- Location -->
-              <!-- <td>{{ entry[5] }}</td> -->
-            <!-- </tr> -->
-            <!-- {% endfor %} -->
-<!--             <tr>
-               <td>&#128522</td>
-               <td align="center">&#128522</td>
-               <td>12/30/2020</td>
-               <td>Trump</td>
-               <td>90</td>
-               <td>NJ</td>
-               <td align="center"><button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Play Audio</button></td>
-            </tr>
-            <tr>
-               <td align="center" >&#128544</td>
-               <td>12/30/2020</td>
-               <td>Michael Curry</td>
-               <td>52</td>
-               <td>OR</td>
-               <td><button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Play</button></td>
-            </tr> -->
-<!--                <td align="center"><button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Play Audio</button></td>
-            </tr>
-         </tbody>
-      </table>
-      <br> -->
-    <!-- </div> -->
- <!-- </div> -->
-<!-- </div> -->
+
+<div id="dynoTable" class="cont"></div>
 
 <script src="{{ url_for('static',filename='js/timeline.js') }}" defer></script>
 </body>
