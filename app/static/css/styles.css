@@ -7,8 +7,6 @@ html{
 
 body {
 	background-image: linear-gradient(to top, #414141 0%, #000000 100%);
-    /* padding-top: 51px;  */ /*this would place timeline just below navbar*/
-    padding-top: 56px;
   font-family: "Helvetica Neue";
   font-size: 20px;
   font-weight: normal;
