@@ -141,3 +141,52 @@ def get_count_of_messages_in_date_range(start_date = None, end_date = None):
         return rows
     except Exception as e:
         raise Exception(e)
+
+
+def get_voice_message_db(message_id = None):
+    '''
+    Get voice message binary blob from database.
+    Args (required): message_id (int): ID of voice message to retrieve.
+    Returns: Row of voice message data and binary.
+    '''
+    try:
+        if not message_id:
+            raise Exception('Message ID required to get voice message.')
+
+        # connect to db
+        db_conn = connect_to_database()
+
+        # query db
+        query = 'SELECT messages.message_url, voice_message FROM messages \
+        JOIN voices ON messages.message_id = voices.message_id \
+        WHERE messages.message_id = {} LIMIT 1'.format(message_id)
+
+        results = execute_query(db_conn, query)
+        rows = results.fetchall()
+
+        return rows
+    except Exception as e:
+        raise Exception(e)
+
+
+def get_voice_message_fd(message_id = None):
+    '''
+    Get voice message binary blob from file directory.
+    Args (required): message_id (int): ID of voice message to retrieve.
+    Returns: Row of voice message data which includes path to specified voice message in file directory.
+    '''
+    try:
+        if not message_id:
+            raise Exception('Message ID required to get voice message.')
+
+        # connect to db
+        db_conn = connect_to_database()
+
+        # query db
+        query = 'SELECT message_url FROM messages WHERE message_id = {} LIMIT 1'.format(message_id)
+        results = execute_query(db_conn, query)
+        rows = results.fetchall()
+
+        return rows
+    except Exception as e:
+        raise Exception(e)

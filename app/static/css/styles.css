@@ -1,6 +1,6 @@
 html{
 	height: 100%;
-	
+
 	background-size: cover;
   background-attachment: fixed;
 }
@@ -23,7 +23,7 @@ p {
   position:relative;
   padding:10px 20px;
   border-radius:25px;
-  
+
   &:before, &:after {
     content:"";
     position:absolute;
@@ -34,10 +34,10 @@ p {
 
 /* Adapted from: https://codepen.io/samuelkraft/pen/Farhl*/
 .from-me {
-  color:white; 
+  color:white;
   background:#0B93F6;
   align-self: flex-end;
-    
+
   &:before {
     right:-7px;
     border-right:20px solid #0B93F6;
@@ -57,7 +57,7 @@ p {
 .from-them {
   background:#E5E5EA;
   color:black;
-    
+
   &:before {
     left:-7px;
     border-left:20px solid #E5E5EA;
@@ -137,8 +137,12 @@ td {
 
 #timeline{
 	width: 100%;
-	min-height:80px; 
+	min-height:80px;
 	/*background-color:powderblue;*/
+}
+
+#dynoTable {
+	margin-top: 30px;
 }
 
 /*table, tr, td{
@@ -172,13 +176,13 @@ article{
   background-color: rgb(47, 47, 47);
   position: fixed;
   width: 100%;
-  height: 135px;
+  height: 80px;
   bottom: 0px;
   left: 0;
   right: 0;
   margin: auto;
   text-align: center;
-  padding: 5px 5%;
+  padding: 10px 5%;
   box-sizing: border-box;
   border-top: 1px solid #E5E5EA;
   box-shadow: 0 0 21px 0px rgba(0,0,0,0.3);
@@ -201,7 +205,7 @@ article{
 	font-family: 'Lato';
 	font-size: 12px;
 	color: grey;
-	
+
 }
 
 @-webkit-keyframes move {
