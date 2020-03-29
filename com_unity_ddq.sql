@@ -12,6 +12,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 CREATE TABLE messages (
   message_id INT AUTO_INCREMENT PRIMARY KEY UNIQUE NOT NULL,
   message_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  message_url VARCHAR(255) NOT NULL,
   -- user_mood VARCHAR(191) NOT NULL, -- changing to INT for now to use a mapping rather than emoji unicode
   user_mood INT NOT NULL,
   user_name VARCHAR(255),

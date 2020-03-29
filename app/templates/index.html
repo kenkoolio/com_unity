@@ -35,11 +35,11 @@
   <nav id="navbar" class="navbar navbar-inverse navbar-fixed-top">
   	<div class="container-fluid">
   		<div class="navbar-header">
-  			<a href="index.html" class="navbar-brand"><span class="glyphicon glyphicon-music" aria-hidden="true"></span> com_unity</a>
+  			<a href="/" class="navbar-brand"><span class="glyphicon glyphicon-music" aria-hidden="true"></span> com_unity</a>
   		</div>
-  		<ul class="nav navbar-nav navbar-left">
+  		<ul class="nav navbar-nav navbar-right">
   			<li><a data-toggle="modal" data-target="#updateModal">Record</a></li>
-  			<li><a href="/about">About</a></li>
+  			<li><a href="/">About</a></li>
   		</ul>
   	</div>
   </nav>
@@ -60,22 +60,23 @@
            <div class="modal-body">
               <div class="container">
                  <div class="container">
+                   <form id="recordMessageForm" enctype="multipart/form-data">
                     <div class="row">
                        <div class="col-lg-1">
                        	MOOD
                           <select id="mood_dropdown" name='mood'>
-                          	  <option value="happy">&#128522;</option>
-              							  <option value="sad">&#128546;</option>
-              							  <option value="angry">&#128544;</option>
-              							  <option value="heart">&#128525;</option>
-              							  <option value="funny">&#128518;</option>
+                          	  <option value=1>&#128522;</option>
+              							  <option value=2>&#128546;</option>
+              							  <option value=3>&#128544;</option>
+              							  <option value=4>&#128525;</option>
+              							  <option value=5>&#128518;</option>
                           </select>
                        </div>
                     </div>
                     <br>
 	               <div class="row">
 	                  <div class="col-lg-1">
-	                     NAME<input type="text" name="name" required><br>
+	                     NAME<input type="text" name="name"><br>
 	                  </div>
 	               </div>
 
@@ -83,7 +84,7 @@
 
                   <div class="row">
                     <div class="col-lg-1">
-                       AGE<input type="text" name="age" required><br>
+                       AGE<input type="text" name="age"><br>
                     </div>
                   </div>
 
@@ -91,33 +92,34 @@
 
                     <div class="row">
                        <div class="col-lg-1">
-                          LOCATION<input type="location" name=""><br>
+                          LOCATION<input type="text" name="location"><br>
                        </div>
                     </div>
 
                     <br>
         <!-- record buttons -->
                     <div class="row">
-	                  <div id="rec_start_view" class="col-lg-2">
-	                     <button id="btnStart" class="btn btn-danger">
-	                     <span id="record_symbol" class="glyphicon glyphicon-record"></span> Rec
-			        	       </button><br>
-	                  </div>
-                    <div id="rec_stop_view" class="col-lg-2" hidden>
-                       <button id="btnStop" class="btn btn-info">
-                       <span id="record_symbol" class="glyphicon glyphicon-stop"></span> Stop
-                       </button><br>
-                    </div>
-                    <br>
-                    <br>
-                    <br>
+  	                  <div id="rec_start_view" class="col-lg-2">
+  	                     <button id="btnStart" class="btn btn-danger">
+  	                     <span id="record_symbol" class="glyphicon glyphicon-record"></span> Rec
+  			        	       </button><br>
+  	                  </div>
+                      <div id="rec_stop_view" class="col-lg-2" hidden>
+                         <button id="btnStop" class="btn btn-info">
+                         <span id="record_symbol" class="glyphicon glyphicon-stop"></span> Stop
+                         </button><br>
+                      </div>
+                      <br>
+                      <br>
+                      <br>
 
-	                  <div>
-                       <audio controls hidden></audio>
-	                     <audio id = 'save' controls="" name='audio'></audio>
-	                  </div>
-	               </div>
+  	                  <div>
+                         <audio controls hidden></audio>
+  	                     <audio id = 'save' controls="" name='audio'></audio>
+  	                  </div>
+	                   </div>
 
+                  </form>
                  </div>
               </div>
               <div class="modal-footer">
@@ -131,12 +133,26 @@
 
 <!-- timeline -->
 <div id="timeline"></div>
-<div class="btn-group" role="group" >
-    <button type="button" id="zoomOut" class="btn btn-info btn-sm">Zoom Out</button>
-    <button type="button" id="prev" class="btn btn-info btn-sm">Prev</button>
-    <button type="button" id="next" class="btn btn-info btn-sm">Next</button>
-    <button type="button" id="zoomIn" class="btn btn-info btn-sm">Zoom In</button>
-</div>
+
+    <button type="button" id="zoomOut" class="btn btn-primary btn-sm">Zoom Out</button>
+    <button type="button" id="prev" class="btn btn-primary btn-sm">Prev</button>
+    <button type="button" id="next" class="btn btn-primary btn-sm">Next</button>
+    <button type="button" id="zoomIn" class="btn btn-primary btn-sm">Zoom In</button>
+
+<!-- stores user chosen audio -->
+<!-- <div class='audio-container'>
+   <audio controls autoplay></audio>
+</div> -->
+
+<article>
+  <div class="cont">
+    <h3>Michael Curry</h3>
+    <time>DEC 30, 2020</time>
+  </div>
+  <audio id="saved_audio" class="audio" controls="controls">
+  </audio>
+</article>
+
 
 <!-- table -->
 
@@ -163,20 +179,20 @@
          </thead>
          <tbody class="table-searchable">
             <tr>
-               <td>&#128522</td>
+               <td align="center">&#128522</td>
                <td>12/30/2020</td>
                <td>Trump</td>
                <td>90</td>
                <td>NJ</td>
-               <td><button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Play</button></td>
+               <td align="center"><button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Play Audio</button></td>
             </tr>
             <tr>
-               <td>&#128544</td>
+               <td align="center" >&#128544</td>
                <td>12/30/2020</td>
                <td>Michael Curry</td>
                <td>52</td>
                <td>OR</td>
-               <td><button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Play</button></td>
+               <td align="center"><button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Play Audio</button></td>
             </tr>
          </tbody>
       </table>
