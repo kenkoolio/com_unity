@@ -209,7 +209,7 @@ article{
 *style audio tag
 */
 
-/*.mejs-container {
+.mejs-container {
 	background: #000;
 	font-family: Helvetica, Arial;
 	text-align: left;
@@ -362,7 +362,7 @@ article{
 
 .mejs-controls .mejs-button button:focus {
 	outline: none;
-}*/
+}
 
 @-webkit-keyframes move {
 	0% {
