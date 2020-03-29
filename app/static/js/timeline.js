@@ -39,7 +39,7 @@ function setup() {
     setXGradient(gradient, width - width / 9, 0, width / 9, timelineHeight, color('rgba(25, 25, 25, 0)'), color('rgba(25, 25, 25, 1)'));
 
     // create selectors
-    const segmentBorderMiddle = Math.floor(width / 2 / zoom1SegmentWidth) * zoom1SegmentWidth;
+    const segmentBorderMiddle = Math.ceil(width / 2 / zoom1SegmentWidth) * zoom1SegmentWidth;
     let pu = segmentBorderMiddle - zoom1SegmentWidth;
     let pl = segmentBorderMiddle;
     selectorLower = new Selector(pu, 15, 0.5, 0.5);

@@ -6,18 +6,13 @@ html{
 
 body {
 	background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%);
-    /* padding-top: 51px;  */ /*this would place timeline just below navbar*/
-    padding-top: 56px;
 
   font-family: "Helvetica Neue";
   font-size: 20px;
   font-weight: normal;
-  max-width: 450px;
-  margin: 50px auto;
-  display: flex;
-  flex-direction: column;
   height: 100%;
 }
+
 p {
   max-width: 255px;
   word-wrap: break-word;
@@ -91,10 +86,31 @@ p {
 	height: 50px;
 }
 
+.top_nav {
+    z-index:10;
+    width: 100%;
+    background-color: #333;
+    position: fixed;
+  }
+
+.top_nav a {
+    color: white;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    display: block;
+}
+
+.lineright {
+    float:right;
+}
+.lineleft {
+    float:left;
+}
+
 #timeline{
-	left:-20%;
 	width: 100%;
-	height:80px; 
+	min-height:80px; 
 	/*background-color:powderblue;*/
 }
 
@@ -122,21 +138,20 @@ table, tr, td{
 https://www.mediaelementjs.com/*/
 
 article{
-	position: relative;
-	width: 50%;
-	height: 300px;
-	top: 40px;
+	position: fixed;
+	width: 100%;
+	height: 100px;
+	bottom: 0px;
 	left: 0;
 	bottom: 0;
 	right: 0;
 	margin: auto;
 	text-align: center;
-	padding: 50px 5%;
+	padding: 5px 5%;
 	box-sizing: border-box;
 	box-shadow: 0 0 21px 0px rgba(0,0,0,0.3);
-	border-radius: 10px;
+	z-index: 10;
 }
-
 .cont{
 	margin-bottom: 28px;
 }
