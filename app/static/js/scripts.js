@@ -106,3 +106,9 @@ navigator.mediaDevices.getUserMedia(constraint)
 .catch(function(err) {
     console.log(err.name, err.message);
 });
+
+
+// Media Player
+// $('audio').mediaelementplayer({
+// 	features: ['playpause','progress','current','tracks','fullscreen']
+// });
