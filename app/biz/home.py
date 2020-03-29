@@ -85,6 +85,8 @@ def get_all_messages():
         results = execute_query(db_conn, query)
         rows = results.fetchall()
 
+        for row in rows:
+          print(row)
         return rows
     except Exception as e:
         raise Exception(e)
@@ -140,3 +142,6 @@ def get_count_of_messages_in_date_range(start_date = None, end_date = None):
         return rows
     except Exception as e:
         raise Exception(e)
+
+# def change_time_format(time = None):
+

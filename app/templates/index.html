@@ -149,12 +149,27 @@
        <span class="glyphicon glyphicon-search table-search-icon"></span>
        <input class="table-search" type="text" placeholder="search...">
      </div>
-     <!-- table -->
+
+      {% for entry in rows %}
+      <!-- Date -->
+      Mood: &#{{ entry[2] }}
+      <p class="from-me">
+        Date: {{ entry[1] }}<br />
+        {% if entry[3] %}
+        {{ entry[3] }},
+        {% else %}
+        Anonymous,
+        {% endif %}
+        age {{ entry[4] }}<br />
+        {{ entry[5] }}<br />
+      </p>
+      {% endfor %}
+      <!-- table -->
       <table class="table table-hover table-bordered">
          <thead align="Center">
             <tr>
-               <th>Mood</th>
                <th>Date</th>
+               <th>Mood</th>
                <th>Name</th>
                <th>Age</th>
                <th>Location</th>
@@ -162,7 +177,21 @@
             </tr>
          </thead>
          <tbody class="table-searchable">
+            {% for entry in rows %}
             <tr>
+              <!-- Date -->
+              <td>{{ entry[1] }}</td>
+              <!-- Emoji -->
+              <td>&#{{ entry[2] }}</td> 
+              <!-- Name -->
+              <td>{{ entry[3] }}</td>
+              <!-- Age -->
+              <td>{{ entry[4] }}</td>
+              <!-- Location -->
+              <td>{{ entry[5] }}</td>
+            </tr>
+            {% endfor %}
+<!--             <tr>
                <td>&#128522</td>
                <td>12/30/2020</td>
                <td>Trump</td>
@@ -177,7 +206,7 @@
                <td>52</td>
                <td>OR</td>
                <td><button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Play</button></td>
-            </tr>
+            </tr> -->
          </tbody>
       </table>
       <br>
