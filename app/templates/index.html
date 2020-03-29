@@ -35,11 +35,11 @@
   <nav id="navbar" class="navbar navbar-inverse navbar-fixed-top">
   	<div class="container-fluid">
   		<div class="navbar-header">
-  			<a href="index.html" class="navbar-brand"><span class="glyphicon glyphicon-music" aria-hidden="true"></span> com_unity</a>
+  			<a href="/" class="navbar-brand"><span class="glyphicon glyphicon-music" aria-hidden="true"></span> com_unity</a>
   		</div>
-  		<ul class="nav navbar-nav navbar-left">
+  		<ul class="nav navbar-nav navbar-right">
   			<li><a data-toggle="modal" data-target="#updateModal">Record</a></li>
-  			<li><a href="/about">About</a></li>
+  			<li><a href="/">About</a></li>
   		</ul>
   	</div>
   </nav>
@@ -133,12 +133,26 @@
 
 <!-- timeline -->
 <div id="timeline"></div>
-<div class="btn-group" role="group" >
-    <button type="button" id="zoomOut" class="btn btn-info btn-sm">Zoom Out</button>
-    <button type="button" id="prev" class="btn btn-info btn-sm">Prev</button>
-    <button type="button" id="next" class="btn btn-info btn-sm">Next</button>
-    <button type="button" id="zoomIn" class="btn btn-info btn-sm">Zoom In</button>
-</div>
+
+    <button type="button" id="zoomOut" class="btn btn-primary btn-sm">Zoom Out</button>
+    <button type="button" id="prev" class="btn btn-primary btn-sm">Prev</button>
+    <button type="button" id="next" class="btn btn-primary btn-sm">Next</button>
+    <button type="button" id="zoomIn" class="btn btn-primary btn-sm">Zoom In</button>
+
+<!-- stores user chosen audio -->
+<!-- <div class='audio-container'>
+   <audio controls autoplay></audio>
+</div> -->
+
+<article>
+  <div class="cont">
+    <h3>Michael Curry</h3>
+    <time>DEC 30, 2020</time>
+  </div>
+  <audio id="saved_audio" class="audio" controls="controls">
+  </audio>
+</article>
+
 
 <!-- table -->
 
@@ -165,20 +179,20 @@
          </thead>
          <tbody class="table-searchable">
             <tr>
-               <td>&#128522</td>
+               <td align="center">&#128522</td>
                <td>12/30/2020</td>
                <td>Trump</td>
                <td>90</td>
                <td>NJ</td>
-               <td><button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Play</button></td>
+               <td align="center"><button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Play Audio</button></td>
             </tr>
             <tr>
-               <td>&#128544</td>
+               <td align="center" >&#128544</td>
                <td>12/30/2020</td>
                <td>Michael Curry</td>
                <td>52</td>
                <td>OR</td>
-               <td><button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Play</button></td>
+               <td align="center"><button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Play Audio</button></td>
             </tr>
          </tbody>
       </table>
