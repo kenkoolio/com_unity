@@ -8,18 +8,13 @@ function upload(blob) {
       }
   };
 
-  let fake_form = {
-    'mood': 1,
-    'name': 'kk',
-    'age': 1,
-    'location': 'vanderland'
-  }
-
   let form = document.getElementById('recordMessageForm');
-
   var fd=new FormData(form);
 
-  fd.append("audio", blob, "test.ogg");
+  let filename = Date.now();
+
+  fd.append("audio", blob, filename+".ogg");
+
   xhr.open("POST","/messages",true);
   xhr.send(fd);
 }
@@ -95,7 +90,7 @@ navigator.mediaDevices.getUserMedia(constraint)
     }
     //send blob data to player audio
     mediaRecorder.onstop = (ev)=>{
-        let blob = new Blob(chunks, { 'type' : 'audio/ogg;' });
+        let blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
         chunks = []; //clear chunk array to inital state
         player.src = window.URL.createObjectURL(blob);
         upload(blob);
