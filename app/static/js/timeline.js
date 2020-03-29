@@ -31,7 +31,7 @@ function setup() {
 
     cnv = createCanvas(windowWidth, timelineHeight);
     cnv.parent('timeline'); // dom element with ID = timeline
-
+    cnv.position(0, 50, 'fixed');
     // create gradient for fun
     gradient = createGraphics(width, timelineHeight);
     gradient.background(color('rgba(255, 255, 255, 0)')); // clear
