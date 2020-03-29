@@ -44,91 +44,71 @@
   	</div>
   </nav>
 
-
-
- <!-- Modal -->
-  <div class="container">
-  <!-- Modal -->
-  <div class="modal fade" id="updateModal" role="dialog">
-     <div class="modal-dialog">
+<div class="container">
+    <!-- Modal -->
+    <div class="modal fade" id="updateModal" role="dialog">
+      <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
-           <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Record Voice</h4>
-           </div>
-           <div class="modal-body">
-              <div class="container">
-                 <div class="container">
-                   <form id="recordMessageForm" enctype="multipart/form-data">
-                    <div class="row">
-                       <div class="col-lg-1">
-                       	MOOD
-                          <select id="mood_dropdown" name='mood'>
-                          	  <option value=1>&#128522;</option>
-              							  <option value=2>&#128546;</option>
-              							  <option value=3>&#128544;</option>
-              							  <option value=4>&#128525;</option>
-              							  <option value=5>&#128518;</option>
-                          </select>
-                       </div>
-                    </div>
-                    <br>
-	               <div class="row">
-	                  <div class="col-lg-1">
-	                     NAME<input type="text" name="name"><br>
-	                  </div>
-	               </div>
-
-                    <br>
-
-                  <div class="row">
-                    <div class="col-lg-1">
-                       AGE<input type="text" name="age"><br>
-                    </div>
-                  </div>
-
-                    <br>
-
-                    <div class="row">
-                       <div class="col-lg-1">
-                          LOCATION<input type="text" name="location"><br>
-                       </div>
-                    </div>
-
-                    <br>
-        <!-- record buttons -->
-                    <div class="row">
-  	                  <div id="rec_start_view" class="col-lg-2">
-  	                     <button id="btnStart" class="btn btn-danger">
-  	                     <span id="record_symbol" class="glyphicon glyphicon-record"></span> Rec
-  			        	       </button><br>
-  	                  </div>
-                      <div id="rec_stop_view" class="col-lg-2" hidden>
-                         <button id="btnStop" class="btn btn-info">
-                         <span id="record_symbol" class="glyphicon glyphicon-stop"></span> Stop
-                         </button><br>
+          <div class="modal-header">
+            <button class="close" data-dismiss="modal" type="button">&times;</button>
+            <h4 class="modal-title">Record Voice</h4>
+          </div>
+          <div class="modal-body">
+            <form enctype="multipart/form-data" id="recordMessageForm" name="recordMessageForm">
+              <div class="row">
+                <table>
+                  <tr>
+                    <td>
+                      <div id="rec_start_view">
+                        <button class="btn btn-danger" id="btnStart"><span class="glyphicon glyphicon-record" id="record_symbol"></span> Rec</button>
                       </div>
-                      <br>
-                      <br>
-                      <br>
-
-  	                  <div>
-                         <audio controls hidden></audio>
-  	                     <audio id = 'save' controls="" name='audio'></audio>
-  	                  </div>
-	                   </div>
-
-                  </form>
-                 </div>
+                      <div hidden="" id="rec_stop_view">
+                        <button class="btn btn-info" id="btnStop"><span class="glyphicon glyphicon-stop" id="record_symbol"></span> Stop</button>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="col-sm-1">
+                        <audio controls="" hidden=""></audio> <audio controls="" id='save'></audio>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="col-sm-1">
+                        <select id="mood_dropdown" name='mood'>
+                          <option value="128522">
+                            &#128522;
+                          </option>
+                          <option value="128546">
+                            &#128546;
+                          </option>
+                          <option value="128544">
+                            &#128544;
+                          </option>
+                          <option value="128525">
+                            &#128525;
+                          </option>
+                          <option value="128518">
+                            &#128518;
+                          </option>
+                        </select>
+                      </div>
+                    </td>
+                  </tr>
+                </table><br>
+                <div align="center">
+                  <input name="name" placeholder="Name" type="text"><span style="color:grey">(optional)</span><br>
+                  <input name="age" placeholder="Age" type="text"><span style="color:grey">(optional)</span><br>
+                  <input name="location" placeholder="Location" type="text"><span style="color:grey">(optional)</span><br>
+                </div><br>
               </div>
-              <div class="modal-footer">
-                 <button type="button" class="btn btn-primary btn-sm" id="submit_audio">SUBMIT</button>
-                 <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" id="close_recorder">CLOSE</button>
-              </div>
-           </div>
+            </form>
+            <div class="modal-footer">
+              <button class="btn btn-primary btn-sm" id="submit_audio" type="button">SUBMIT</button> <button class="btn btn-default btn-sm" data-dismiss="modal" id="close_recorder" type="button">CLOSE</button>
+            </div>
+          </div>
         </div>
-     </div>
+      </div>
+    </div>
   </div>
 
 <!-- timeline -->
@@ -143,7 +123,7 @@
 <!-- <div class='audio-container'>
    <audio controls autoplay></audio>
 </div> -->
-
+<div class='audio-container'>
 <article>
   <div class="cont">
     <h6>Michael Curry</h6>
@@ -152,7 +132,7 @@
   <audio id="saved_audio" class="audio" controls="controls">
   </audio>
 </article>
-
+</div>
 
 <!-- table -->
 
@@ -207,20 +187,8 @@
             </tr>
          </thead>
          <tbody class="table-searchable">
-            {% for entry in rows %}
             <tr> -->
-              <!-- Date -->
-              <!-- <td>{{ entry[1] }}</td> -->
-              <!-- Emoji -->
-              <!-- <td>&#{{ entry[2] }}</td>  -->
-              <!-- Name -->
-              <!-- <td>{{ entry[3] }}</td> -->
-              <!-- Age -->
-              <!-- <td>{{ entry[4] }}</td> -->
-              <!-- Location -->
-              <!-- <td>{{ entry[5] }}</td> -->
             <!-- </tr> -->
-            <!-- {% endfor %} -->
 <!--             <tr>
                <td>&#128522</td>
                <td align="center">&#128522</td>
