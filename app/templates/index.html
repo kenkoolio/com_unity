@@ -126,10 +126,10 @@
 <div class='audio-container'>
 <article>
   <div class="cont">
-    <h6>Michael Curry</h6>
-    <time>DEC 30, 2020</time>
+    <h6 id="selected_user"></h6>
+    <time id="selected_time"></time>
   </div>
-  <audio id="saved_audio" class="audio" controls="controls">
+  <audio id="saved_audio" class="audio" controls="controls" autoplay>
   </audio>
 </article>
 </div>
@@ -154,7 +154,7 @@
             </p>
           </td>
           <td>
-            <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Play Audio</button>
+            <button type="button" class="btn btn-primary btn-sm" title="transfer_audio" data-name='{{ entry[4] }}' data-time='{{entry[1]}}' value="static/{{ entry[2] }}">Play Audio</button>
           </td>
         </tr>
         </tbody>
