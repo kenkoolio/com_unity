@@ -117,6 +117,8 @@ navigator.mediaDevices.getUserMedia(constraint)
       //close modal if valid send
       document.getElementById('close_recorder').click();
 
+      refreshMessages();
+
       // prevent form submission
       ev.preventDefault();
     });
