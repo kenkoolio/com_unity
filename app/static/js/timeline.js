@@ -436,6 +436,10 @@ function appendCellOfType(parent, type, label) {
     return cell; // in case it needs to be referenced.
 }
 
+function firePlayer(entryName) {
+    $('#saved_audio').attr("src", entryName);
+}
+
 function refreshMessages () {
     let tableContainer = document.getElementById("dynoTable");
 
@@ -510,10 +514,15 @@ function refreshMessages () {
                 for (let bubble of allBubbles)
                 {
                     bubble.style.backgroundColor = "#E5E5EA";
+                    bubble.style.color = "black";
+                    // bubble.classList.remove("from-me");
+                    // bubble.classList.add("from-them");
                 }
                 
-                bubbleTextArea.style.backgroundColor = "#0099ff";
-                //firePlayer(hiddenMessageID);
+                bubbleTextArea.style.backgroundColor = "#0B93F6";
+                bubbleTextArea.style.color = "white";
+                //bubbleTextArea.classList.add("from-me");
+                firePlayer(entry[2]);
             }, false);
     
             // missing modal thing from justin's code
