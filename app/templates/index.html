@@ -40,9 +40,7 @@
         <a class="lineright" href="/">About</a>
         <a class="lineright" data-toggle="modal" data-target="#updateModal">Record</a>
     </div>
-    <!-- timeline -->
     <div id="timeline"></div>
-    <script src="{{ url_for('static',filename='js/timeline.js') }}" defer></script>
   </div>
 
 
@@ -169,88 +167,35 @@
      </div>
 
       <!-- Text Messages -->
-      <div class="cont">
-      <table class="text_message">
-        <tbody>
-        {% for entry in rows %}
-        <tr>
-          <td class="mood">&#{{ entry[3] }}</td>
-          <td>
-            <p class="from-them">
-              {{ entry[1].strftime('%m/%d/%Y, %I:%M %p') }}<br />
-              {% if entry[4] %}
-              {{ entry[4] }},
-              {% else %}
-              Anonymous,
-              {% endif %}
-              age {{ entry[5] }}<br />
-              {{ entry[6] }}<br />
-            </p>
-          </td>
-          <td>
-            <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Play Audio</button>
-          </td>
-        </tr>
-        </tbody>
-        {% endfor %}
-      </table>
-      </div>
-
-      <!-- table -->
-<!--       <table class="table table-hover table-bordered">
-         <thead align="Center">
-            <tr>
-               <th>Date</th>
-               <th>Mood</th>
-               <th>Name</th>
-               <th>Age</th>
-               <th>Location</th>
-               <th>Audio</th>
-            </tr>
-         </thead>
-         <tbody class="table-searchable">
+      <!-- <div class="cont">
+        <table class="text_message">
+            <tbody>
             {% for entry in rows %}
-            <tr> -->
-              <!-- Date -->
-              <!-- <td>{{ entry[1] }}</td> -->
-              <!-- Emoji -->
-              <!-- <td>&#{{ entry[2] }}</td>  -->
-              <!-- Name -->
-              <!-- <td>{{ entry[3] }}</td> -->
-              <!-- Age -->
-              <!-- <td>{{ entry[4] }}</td> -->
-              <!-- Location -->
-              <!-- <td>{{ entry[5] }}</td> -->
-            <!-- </tr> -->
-            <!-- {% endfor %} -->
-<!--             <tr>
-               <td>&#128522</td>
-               <td align="center">&#128522</td>
-               <td>12/30/2020</td>
-               <td>Trump</td>
-               <td>90</td>
-               <td>NJ</td>
-               <td align="center"><button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Play Audio</button></td>
-            </tr>
             <tr>
-               <td align="center" >&#128544</td>
-               <td>12/30/2020</td>
-               <td>Michael Curry</td>
-               <td>52</td>
-               <td>OR</td>
-               <td><button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Play</button></td>
-            </tr> -->
-<!--                <td align="center"><button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Play Audio</button></td>
+                <td class="mood">&#{{ entry[3] }}</td>
+                <td>
+                    <p class="from-them">
+                    {{ entry[1].strftime('%m/%d/%Y, %I:%M %p') }}<br />
+                    {% if entry[4] %}
+                    {{ entry[4] }},
+                    {% else %}
+                    Anonymous,
+                    {% endif %}
+                    age {{ entry[5] }}<br />
+                    {{ entry[6] }}<br />
+                    </p>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Play Audio</button>
+                </td>
             </tr>
-         </tbody>
-      </table>
-      <br> -->
-    <!-- </div> -->
- <!-- </div> -->
-<!-- </div> -->
+            </tbody>
+            {% endfor %}
+        </table>
+      </div> -->
 
-
+      <div id="dynoTable" class="cont"></div>
 </body>
 
-
+<script src="{{ url_for('static',filename='js/timeline.js') }}" defer></script>
 </html>
