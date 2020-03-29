@@ -2,6 +2,8 @@
 # Description: Functions to connect to the database and execute queries.
 # Citation: https://github.com/knightsamar/CS340_starter_flask_app/blob/master/db_connector/db_connector.py
 
+# TODO: Sanitize the queries to properly use .execute() instead of string interpolation to avoid SQL injections
+
 from dotenv import load_dotenv
 import MySQLdb
 import os

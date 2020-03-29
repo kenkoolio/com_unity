@@ -9,7 +9,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 
 -- Message meta data table
-CREATE TABLE Messages (
+CREATE TABLE messages (
   message_id INT AUTO_INCREMENT PRIMARY KEY UNIQUE NOT NULL,
   message_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   -- user_mood VARCHAR(191) NOT NULL, -- changing to INT for now to use a mapping rather than emoji unicode
@@ -21,7 +21,7 @@ CREATE TABLE Messages (
 
 
 -- Message voice recording table
-CREATE TABLE Voices (
+CREATE TABLE voices (
   message_id INT PRIMARY KEY UNIQUE NOT NULL,
   voice_message MEDIUMBLOB NOT NULL,
   FOREIGN KEY (message_id) REFERENCES Messages(message_id)
