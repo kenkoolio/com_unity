@@ -175,7 +175,7 @@
           <td class="mood">&#{{ entry[2] }}</td>
           <td>
             <p class="from-me">
-              {{ entry[1] }}<br />
+              {{ entry[1].strftime('%m/%d/%Y, %I:%M %p') }}<br />
               {% if entry[3] %}
               {{ entry[3] }},
               {% else %}
