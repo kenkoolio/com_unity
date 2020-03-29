@@ -56,7 +56,9 @@ let start = document.getElementById('btnStart'); //start button
 let stop = document.getElementById('btnStop'); //stop button
 let player = document.getElementById('save'); //audio player
 let audio = document.querySelector('audio'); //hidden recording audio
+let submit_button = document.querySelector('#submit_audio'); //submit button
 let chunks = []; //store audio data in array or chunks
+let blob;
 
 //RECORDING MODULE//
 //limit to audio only
@@ -90,11 +92,30 @@ navigator.mediaDevices.getUserMedia(constraint)
     }
     //send blob data to player audio
     mediaRecorder.onstop = (ev)=>{
-        let blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
+        blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
         chunks = []; //clear chunk array to inital state
         player.src = window.URL.createObjectURL(blob);
-        upload(blob);
     }
+
+    //send blob data to server to save message
+    submit_button.addEventListener('click', (ev) => {
+      if (!blob) return;
+
+      //submit via upload method
+      upload(blob);
+
+      //reset the form
+      document.getElementById('recordMessageForm').reset();
+      chunks = [] //clear chunk array to initial state
+      player.src = "";
+      blob = "";
+
+      //close modal if valid send
+      document.getElementById('close_recorder').click();
+
+      // prevent form submission
+      ev.preventDefault();
+    });
 
 })
 //Error Handling
