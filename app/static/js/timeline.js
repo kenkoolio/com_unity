@@ -321,8 +321,11 @@ class DateLine {
 
             this.lastStepDragged = true;
         }
-        else
+        else {
             this.lastStepDragged = false;
+            // refresh shown messages;
+            refreshMessages();
+        }
 
         image(this.image, this.x, this.y);
     }
