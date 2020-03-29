@@ -164,7 +164,7 @@ class Selector {
         let segmentRelative = 0;
         if (zoomLevel == 1)
         {
-            segmentRelative = Math.floor(this.tipX / zoom1SegmentWidth);
+            segmentRelative = Math.ceil(this.tipX / zoom1SegmentWidth);
         }
         //console.log(segmentRelative);
         let thisDate = dateLine.getDate(segmentRelative);
@@ -247,6 +247,7 @@ class DateLine {
                     for(; currPixel < dl.width; currPixel += zoom1SegmentWidth)
                     {
                         let curDateString = currDate.toISOString().substring(0, 10);
+                        // add indicators for days with messages
                         if (messageMap[curDateString])
                         {
                             //colorMode(HSL, 255);
@@ -321,8 +322,11 @@ class DateLine {
 
             this.lastStepDragged = true;
         }
-        else
+        else {
             this.lastStepDragged = false;
+            // refresh shown messages;
+            refreshMessages();
+        }
 
         image(this.image, this.x, this.y);
     }
@@ -434,41 +438,48 @@ function refreshMessages () {
     // create new table
     let table = appendCellOfType(tableContainer, "table");
     table.classList.add("text_message");
-    let tbody = appendCellOfType(table, "tboxy");
+    let tbody = appendCellOfType(table, "tbody");
 
-    // get rows
-    let rows = [[" ", "2020 20:25", "??", "127828", "noah", 25, "seattle"],
-    [" ", "2020 20:25", "??", "127828", "noah", 25, "seattle"],
-    [" ", "2020 20:25", "??", "127828", "noah", 25, "seattle"],
-    [" ", "2020 20:25", "??", "127828", "noah", 25, "seattle"]];
-
+    // grab selected dates
     let dates = selectedDates();
     let lowDate = dates[2];
     let highDate = dates[3];
 
+    // grab messages and populate table
     let req = new XMLHttpRequest();
     let route = "/messages-in-range?start='" + lowDate + "'&end='" + highDate + "'";
+    console.log(lowDate, highDate);
     req.open("GET", route, true);
     req.onreadystatechange = function() {
       if (req.readyState == 4 && req.status == 200) {
         let messages = JSON.parse(req.responseText);
 
         for (let entry of messages) {
+            console.log(entry);
             let emojinum = entry[3];
             let emojistring = emojinum.toString(16); // convert to hex string
             let datetime = entry[1];
             let name = (entry[4])? entry[4] : "Anonymous";
-            let age = 213;
-            let location = "location";
+            let age = entry[5];
+            let location = entry[6];
+            let messageID = entry[0];
     
             let bubbleText =
                 name + "\n" +
-                datetime + "\n" +
-                "age " + age + "\n" +
-                location;
-    
+                datetime + "\n";
+            if (age != null) {
+                 bubbleText += "age " + age + "\n";
+            }
+            if (location != null) {
+                bubbleText += location;
+            }
     
             let row = appendCellOfType(tbody, "tr");
+
+            // attache message ID and hide from view.
+            let hiddenMessageID = appendCellOfType(row, "td", messageID);
+            hiddenMessageID.style = "display:none;";
+
             let emoji = appendCellOfType(row, "td", emojistring); // replace 1 with emoji
             emoji.classList.add("mood");
     
