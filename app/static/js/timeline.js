@@ -39,7 +39,7 @@ function setup() {
     setXGradient(gradient, width - width / 9, 0, width / 9, timelineHeight, color('rgba(25, 25, 25, 0)'), color('rgba(25, 25, 25, 1)'));
 
     // create selectors
-    const segmentBorderMiddle = Math.floor(width / 2 / zoom1SegmentWidth) * zoom1SegmentWidth;
+    const segmentBorderMiddle = Math.ceil(width / 2 / zoom1SegmentWidth) * zoom1SegmentWidth;
     let pu = segmentBorderMiddle - zoom1SegmentWidth;
     let pl = segmentBorderMiddle;
     selectorLower = new Selector(pu, 15, 0.5, 0.5);
@@ -60,11 +60,18 @@ function setup() {
 // returns an array with a from date and a to date.
 function selectedDates() {
     let dArr = [];
-    dArr.push(selectorLower.getDate()); // to return Date objects
-    dArr.push(selectorUpper.getDate());
-    dArr.push(selectorLower.getDate().toISOString().substring(0, 10)); // to return string of format '2020-3-28'
-    dArr.push(selectorUpper.getDate().toISOString().substring(0, 10));
-    
+    let lDate = selectorLower.getDate();
+    let hDate = selectorUpper.getDate();
+    if (hDate < lDate) {
+        let temp = lDate;
+        lDate = hDate;
+        hDate = temp;
+    }
+    dArr.push(lDate); // to return Date objects
+    dArr.push(hDate);
+    dArr.push(lDate.toISOString().substring(0, 10)); // to return string of format '2020-3-28'
+    dArr.push(hDate.toISOString().substring(0, 10));
+
     return dArr;
 }
 
@@ -108,7 +115,7 @@ class Selector {
             if (draggingMouseX >= 8 && draggingMouseX <= (width - 8)) // don't allow selector off-screen
                 this.tipX = draggingMouseX - 0.5;
             this.snagged = true;
-            
+
             selectLock = this;
             this.lastStepDragged = true;
         }
@@ -139,8 +146,11 @@ class Selector {
                 // text(dateString, this.tipX + 1, this.tipY);
 
                 this.lastStepDragged = false;
+
+                // refresh shown messages;
+                refreshMessages();
             }
-        }            
+        }
     }
 
     show() {
@@ -174,7 +184,7 @@ class DateLine {
         this.cleanSegmentWidth = this.cleanSegments * zoom1SegmentWidth;
         this.x = -this.cleanSegmentWidth;
         this.y = 0;
-        
+
         this.recreate();
     }
 
@@ -234,7 +244,7 @@ class DateLine {
                 if (zoomLevel == 1) { // days view
                     //const formatter = new Intl.DateTimeFormat('en', { month: 'short' });
                     // one day per zoom1SegmentWidth pixels
-                    for(; currPixel < dl.width; currPixel += zoom1SegmentWidth) 
+                    for(; currPixel < dl.width; currPixel += zoom1SegmentWidth)
                     {
                         let curDateString = currDate.toISOString().substring(0, 10);
                         if (messageMap[curDateString])
@@ -256,7 +266,7 @@ class DateLine {
                             //colorMode(RGB, 255);
                             dl.colorMode(RGB, 255);
                         }
-                        
+
                         // if day 0 of year, add year tag and long tick
                         if (currDate.getMonth() == 0 && currDate.getDate() == 1)
                         {
@@ -290,8 +300,8 @@ class DateLine {
                     }
                 }
                 first = true;
-            } 
-            // else 
+            }
+            // else
             // {
             //     console.log("Error getting entries for timeline.")
             // }
@@ -313,7 +323,7 @@ class DateLine {
         }
         else
             this.lastStepDragged = false;
-        
+
         image(this.image, this.x, this.y);
     }
 }
@@ -384,7 +394,7 @@ function draw() {
         // mod selectors if dragging or we need to snap to a tic after a drag. This will also lock the dragger if selected.
         selectorLower.dragMod(mx, my);
         selectorUpper.dragMod(mx, my);
-        
+
         if (!dragging && dateLine.lastStepDragged)
         {
             dateLine.recreate(true);
@@ -402,4 +412,82 @@ function draw() {
         // shade with gradient to make it seem like a round dial
         image(gradient, 0, 0);
     }
+}
+
+//Helper function to add cells of the passed type to table
+function appendCellOfType(parent, type, label) {
+    let cell = document.createElement(type);
+    if (label != null)
+        cell.innerText = label;
+    parent.appendChild(cell);
+
+    return cell; // in case it needs to be referenced.
+}
+
+function refreshMessages () {
+    let tableContainer = document.getElementById("dynoTable");
+
+    // remove old table
+    if (tableContainer.hasChildNodes())
+        tableContainer.removeChild(tableContainer.firstElementChild);
+    
+    // create new table
+    let table = appendCellOfType(tableContainer, "table");
+    table.classList.add("text_message");
+    let tbody = appendCellOfType(table, "tboxy");
+
+    // get rows
+    let rows = [[" ", "2020 20:25", "??", "127828", "noah", 25, "seattle"],
+    [" ", "2020 20:25", "??", "127828", "noah", 25, "seattle"],
+    [" ", "2020 20:25", "??", "127828", "noah", 25, "seattle"],
+    [" ", "2020 20:25", "??", "127828", "noah", 25, "seattle"]];
+
+    let dates = selectedDates();
+    let lowDate = dates[2];
+    let highDate = dates[3];
+
+    let req = new XMLHttpRequest();
+    let route = "/messages-in-range?start='" + lowDate + "'&end='" + highDate + "'";
+    req.open("GET", route, true);
+    req.onreadystatechange = function() {
+      if (req.readyState == 4 && req.status == 200) {
+        let messages = JSON.parse(req.responseText);
+
+        for (let entry of messages) {
+            let emojinum = entry[3];
+            let emojistring = emojinum.toString(16); // convert to hex string
+            let datetime = entry[1];
+            let name = (entry[4])? entry[4] : "Anonymous";
+            let age = 213;
+            let location = "location";
+    
+            let bubbleText =
+                name + "\n" +
+                datetime + "\n" +
+                "age " + age + "\n" +
+                location;
+    
+    
+            let row = appendCellOfType(tbody, "tr");
+            let emoji = appendCellOfType(row, "td", emojistring); // replace 1 with emoji
+            emoji.classList.add("mood");
+    
+            // add emoji, message element [3]
+    
+            let bubble = appendCellOfType(row, "td");
+            let bubbleTextArea = appendCellOfType(bubble, "p", bubbleText);
+            bubbleTextArea.classList.add("from-them");
+            let bubbleButtonContainer = appendCellOfType(row, "td");
+            let bubbleButton = appendCellOfType(row, "button", "Play Audio");
+            bubbleButton.classList.add("btn");
+            bubbleButton.classList.add("btn-primary");
+            bubbleButton.classList.add("btn-sm");
+    
+            // missing modal thing from justin's code
+        }
+      }
+    }
+    req.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    req.responseType = ''; // treat as text
+    req.send();
 }

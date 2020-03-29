@@ -31,7 +31,7 @@ def home():
     '''
     try:
         rows = db_home.get_all_messages()
-        
+
         return render_template('index.html', rows=rows)
     except Exception as e:
         print('Error: Home page error: {}'.format(e))
@@ -69,7 +69,7 @@ def save_message():
 @app.route('/messages-in-range', methods=['GET'])
 def get_all_messages_in_date_range():
     '''
-    Gets all messages.
+    Gets all messages in date range.
     Query arguments (required): start (date): start date of messages to retrieve.
                                 end (date): end date of messages to retrieve.
     Returns: Rows (json list): messages within specified range.

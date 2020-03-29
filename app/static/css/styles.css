@@ -9,14 +9,9 @@ body {
 	background-image: linear-gradient(to top, #414141 0%, #000000 100%);
     /* padding-top: 51px;  */ /*this would place timeline just below navbar*/
     padding-top: 56px;
-    
   font-family: "Helvetica Neue";
   font-size: 20px;
   font-weight: normal;
-/*  max-width: 450px;
-  margin: 50px auto;
-  display: flex;
-  flex-direction: column;*/
   height: 100%;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -119,10 +114,31 @@ td {
 	height: 50px;
 }
 
+.top_nav {
+    z-index:10;
+    width: 100%;
+    background-color: #333;
+    position: fixed;
+  }
+
+.top_nav a {
+    color: white;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    display: block;
+}
+
+.lineright {
+    float:right;
+}
+.lineleft {
+    float:left;
+}
+
 #timeline{
-	left:-20%;
 	width: 100%;
-	height:80px; 
+	min-height:80px; 
 	/*background-color:powderblue;*/
 }
 
@@ -193,7 +209,7 @@ article{
 *style audio tag
 */
 
-.mejs-container {
+/*.mejs-container {
 	background: #000;
 	font-family: Helvetica, Arial;
 	text-align: left;
@@ -346,7 +362,7 @@ article{
 
 .mejs-controls .mejs-button button:focus {
 	outline: none;
-}
+}*/
 
 @-webkit-keyframes move {
 	0% {
