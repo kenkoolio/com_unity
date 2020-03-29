@@ -24,7 +24,7 @@ CREATE TABLE messages (
 CREATE TABLE voices (
   message_id INT PRIMARY KEY UNIQUE NOT NULL,
   voice_message MEDIUMBLOB NOT NULL,
-  FOREIGN KEY (message_id) REFERENCES Messages(message_id)
+  FOREIGN KEY (message_id) REFERENCES messages(message_id)
     ON DELETE CASCADE
     ON UPDATE CASCADE
 )ENGINE=InnoDB;
@@ -33,4 +33,4 @@ CREATE TABLE voices (
 -- Set database's default charset to handle emojis
 ALTER DATABASE com_unity CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 -- Set table's default charset to handle emojis
-ALTER TABLE Messages CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE messages CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

@@ -2,10 +2,10 @@
 // <reference path="./p5.d.ts" />
 
 // hack code to scoot the timeline down under the above dom element
-// var navbar = document.getElementById("navbar");
-// var body = navbar.parentNode;
-// var padding = navbar.offsetHeight;
-// body.style.paddingTop = String(padding) + "px";
+var navbar = document.getElementById("navbar");
+var body = navbar.parentNode;
+var padding = navbar.offsetHeight;
+body.style.paddingTop = String(padding) + "px";
 
 
 var first = true; // draw once and then wait for mouse press.
@@ -50,11 +50,10 @@ function setup() {
     // create the dateline
     let today = new Date();
     let daysVisible = width / 6;
-    let minDate = addDays(today, -1 * daysVisible)
-    //let mindate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    
-    let maxDate = addDays(today, 2 * daysVisible)
-    //let maxdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    let daysLeftOfToday = Math.floor(daysVisible / 2);
+    let daysRightOfToday = Math.ceil(daysVisible / 2);
+    let minDate = addDays(today, -1 * (daysVisible + daysLeftOfToday));
+    let maxDate = addDays(today, daysVisible + daysRightOfToday);
     dateLine = new DateLine(minDate, maxDate);
 }
 
@@ -154,7 +153,7 @@ class Selector {
         {
             segmentRelative = Math.floor(this.tipX / zoom1SegmentWidth);
         }
-        console.log(segmentRelative);
+        //console.log(segmentRelative);
         let thisDate = dateLine.getDate(segmentRelative);
         return thisDate;
     }
@@ -207,44 +206,97 @@ class DateLine {
         dl.strokeWeight(1);
         dl.textFont('Verdana');
         let month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-        if (zoomLevel == 1) { // days view
-            //const formatter = new Intl.DateTimeFormat('en', { month: 'short' });
-            // one day per zoom1SegmentWidth pixels
-            for(; currPixel < dl.width; currPixel += zoom1SegmentWidth) 
+
+        // get counts of all entries in range from server
+        //Open the POST request
+        let req = new XMLHttpRequest();
+        let sdatelow = this.dateLow.toISOString().substring(0, 10);
+        let sdatehigh = this.dateHigh.toISOString().substring(0, 10);
+        let route = "/date-count?start='" + sdatelow + "'&end='" + sdatehigh + "'";
+        //console.log(route);
+        req.open("GET", route, true);
+        req.onreadystatechange = function()
             {
-                
-                // if day 0 of year, add year tag and long tick
-                if (currDate.getMonth() == 0 && currDate.getDate() == 1)
-                {
-                    const year = String(currDate.getFullYear());
-                    dl.strokeWeight(0);
-                    dl.textSize(16);
-                    dl.text(year, currPixel + 3, 15)
-                    dl.strokeWeight(1);
-                    dl.line(currPixel, timelineHeight - lineBorderPixels * 4, currPixel, timelineHeight - lineBorderPixels);
+            if (req.readyState == 4 && req.status == 200)
+            {
+                let messages = JSON.parse(req.responseText);
+                let messageMap = {};
+                let maxMessage = 5;
+                for (let m of messages) {
+                    messageMap[m[0]] = m[1];
+                    if (m[1] > maxMessage)
+                        maxMessage = m[1];
                 }
-                // if day 0 of month, add month tag and medium tick and month name
-                dl.textSize(12);
-                if (currDate.getDate() == 1)
-                {
-                    //const month = currDate.toLocaleString('default', { month: 'long' });
-                    //const month = formatter.format(currDate);
-                    const month = month_names[currDate.getMonth()];
-                    dl.strokeWeight(0);
-                    dl.text(month, currPixel + 3, timelineHeight - lineBorderPixels * 4 + 1)
-                    dl.strokeWeight(1);
-                    dl.line(currPixel, timelineHeight - lineBorderPixels * 3, currPixel, timelineHeight - lineBorderPixels);
+
+                if (zoomLevel == 1) { // days view
+                    //const formatter = new Intl.DateTimeFormat('en', { month: 'short' });
+                    // one day per zoom1SegmentWidth pixels
+                    for(; currPixel < dl.width; currPixel += zoom1SegmentWidth) 
+                    {
+                        let curDateString = currDate.toISOString().substring(0, 10);
+                        if (messageMap[curDateString])
+                        {
+                            //colorMode(HSL, 255);
+                            dl.colorMode(HSL, 255);
+                            let dayHue = map(messageMap[curDateString], 1, maxMessage, 80, 0); // 180 to start at light blue, 120 to start at green
+                            //let dayLum = map(messageMap[curDateString], 1, maxMessage, 180, 255);
+                            let dayLum = map(messageMap[curDateString], 1, maxMessage, 0, 180);
+                            //console.log(dayHue);
+                            let dayColor = dl.color(0, dayLum, 150);
+                            dl.stroke(dayColor);
+                            dl.strokeWeight(1);
+                            dl.fill(dayColor)
+                            dl.rect(currPixel+0.5, lineBorderPixels, 5, timelineHeight - 2 * lineBorderPixels);
+                            dl.stroke(0);
+                            dl.fill(0);
+                            dl.strokeWeight(1);
+                            //colorMode(RGB, 255);
+                            dl.colorMode(RGB, 255);
+                        }
+                        
+                        // if day 0 of year, add year tag and long tick
+                        if (currDate.getMonth() == 0 && currDate.getDate() == 1)
+                        {
+                            const year = String(currDate.getFullYear());
+                            dl.strokeWeight(0);
+                            dl.textSize(16);
+                            dl.text(year, currPixel + 3, 15)
+                            dl.strokeWeight(1);
+                            dl.line(currPixel, timelineHeight - lineBorderPixels * 4, currPixel, timelineHeight - lineBorderPixels);
+                        }
+                        // if day 0 of month, add month tag and medium tick and month name
+                        dl.textSize(12);
+                        if (currDate.getDate() == 1)
+                        {
+                            //const month = currDate.toLocaleString('default', { month: 'long' });
+                            //const month = formatter.format(currDate);
+                            const month = month_names[currDate.getMonth()];
+                            dl.strokeWeight(0);
+                            dl.text(month, currPixel + 3, timelineHeight - lineBorderPixels * 4 + 1)
+                            dl.strokeWeight(1);
+                            dl.line(currPixel, timelineHeight - lineBorderPixels * 3, currPixel, timelineHeight - lineBorderPixels);
+                        }
+                        // else add short tick
+                        else{
+                            dl.line(currPixel, timelineHeight - lineBorderPixels * 2, currPixel, timelineHeight - lineBorderPixels);
+                        }
+                        // console.log(currDate.getMonth());
+                        // console.log(currDate.getDate());
+                        // console.log(currDate);
+                        currDate = addDays(currDate, 1);
+                    }
                 }
-                // else add short tick
-                else{
-                    dl.line(currPixel, timelineHeight - lineBorderPixels * 2, currPixel, timelineHeight - lineBorderPixels);
-                }
-                // console.log(currDate.getMonth());
-                // console.log(currDate.getDate());
-                // console.log(currDate);
-                currDate = addDays(currDate, 1);
-            }
-        }
+                first = true;
+            } 
+            // else 
+            // {
+            //     console.log("Error getting entries for timeline.")
+            // }
+            };
+        req.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        //req.setRequestHeader("Content-Type", "application/json");
+        req.responseType = ''; // treat as text
+        req.send();
     }
 
     show(draggingMouseX) {
