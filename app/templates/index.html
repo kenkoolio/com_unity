@@ -172,17 +172,17 @@
         <tbody>
         {% for entry in rows %}
         <tr>
-          <td class="mood">&#{{ entry[2] }}</td>
+          <td class="mood">&#{{ entry[3] }}</td>
           <td>
             <p class="from-them">
               {{ entry[1].strftime('%m/%d/%Y, %I:%M %p') }}<br />
-              {% if entry[3] %}
-              {{ entry[3] }},
+              {% if entry[4] %}
+              {{ entry[4] }},
               {% else %}
               Anonymous,
               {% endif %}
-              age {{ entry[4] }}<br />
-              {{ entry[5] }}<br />
+              age {{ entry[5] }}<br />
+              {{ entry[6] }}<br />
             </p>
           </td>
           <td>
