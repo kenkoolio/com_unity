@@ -504,7 +504,7 @@ function refreshMessages () {
             let bubbleTextArea = appendCellOfType(bubble, "p", bubbleText);
             bubbleTextArea.classList.add("from-them");
             let bubbleButtonContainer = appendCellOfType(row, "td");
-            let bubbleButton = appendCellOfType(bubbleButtonContainer, "button", "Play Audio");
+            let bubbleButton = appendCellOfType(bubbleButtonContainer, "button", "Listen");
             bubbleButton.classList.add("btn");
             bubbleButton.classList.add("btn-primary");
             bubbleButton.classList.add("btn-sm");
