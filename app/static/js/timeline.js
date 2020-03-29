@@ -64,7 +64,7 @@ function selectedDates() {
     dArr.push(selectorUpper.getDate());
     dArr.push(selectorLower.getDate().toISOString().substring(0, 10)); // to return string of format '2020-3-28'
     dArr.push(selectorUpper.getDate().toISOString().substring(0, 10));
-    
+
     return dArr;
 }
 
@@ -108,7 +108,7 @@ class Selector {
             if (draggingMouseX >= 8 && draggingMouseX <= (width - 8)) // don't allow selector off-screen
                 this.tipX = draggingMouseX - 0.5;
             this.snagged = true;
-            
+
             selectLock = this;
             this.lastStepDragged = true;
         }
@@ -140,7 +140,7 @@ class Selector {
 
                 this.lastStepDragged = false;
             }
-        }            
+        }
     }
 
     show() {
@@ -174,7 +174,7 @@ class DateLine {
         this.cleanSegmentWidth = this.cleanSegments * zoom1SegmentWidth;
         this.x = -this.cleanSegmentWidth;
         this.y = 0;
-        
+
         this.recreate();
     }
 
@@ -234,7 +234,7 @@ class DateLine {
                 if (zoomLevel == 1) { // days view
                     //const formatter = new Intl.DateTimeFormat('en', { month: 'short' });
                     // one day per zoom1SegmentWidth pixels
-                    for(; currPixel < dl.width; currPixel += zoom1SegmentWidth) 
+                    for(; currPixel < dl.width; currPixel += zoom1SegmentWidth)
                     {
                         let curDateString = currDate.toISOString().substring(0, 10);
                         if (messageMap[curDateString])
@@ -256,7 +256,7 @@ class DateLine {
                             //colorMode(RGB, 255);
                             dl.colorMode(RGB, 255);
                         }
-                        
+
                         // if day 0 of year, add year tag and long tick
                         if (currDate.getMonth() == 0 && currDate.getDate() == 1)
                         {
@@ -290,8 +290,8 @@ class DateLine {
                     }
                 }
                 first = true;
-            } 
-            // else 
+            }
+            // else
             // {
             //     console.log("Error getting entries for timeline.")
             // }
@@ -313,7 +313,7 @@ class DateLine {
         }
         else
             this.lastStepDragged = false;
-        
+
         image(this.image, this.x, this.y);
     }
 }
@@ -384,7 +384,7 @@ function draw() {
         // mod selectors if dragging or we need to snap to a tic after a drag. This will also lock the dragger if selected.
         selectorLower.dragMod(mx, my);
         selectorUpper.dragMod(mx, my);
-        
+
         if (!dragging && dateLine.lastStepDragged)
         {
             dateLine.recreate(true);
