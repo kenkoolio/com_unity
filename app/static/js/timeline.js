@@ -460,16 +460,19 @@ function refreshMessages () {
             let emojistring = emojinum.toString(16); // convert to hex string
             let datetime = entry[1];
             let name = (entry[4])? entry[4] : "Anonymous";
-            let age = 213;
-            let location = "location";
+            let age = entry[5];
+            let location = entry[6];
             let messageID = entry[0];
     
             let bubbleText =
                 name + "\n" +
-                datetime + "\n" +
-                "age " + age + "\n" +
-                location;
-    
+                datetime + "\n";
+            if (age != null) {
+                 bubbleText += "age " + age + "\n";
+            }
+            if (location != null) {
+                bubbleText += location;
+            }
     
             let row = appendCellOfType(tbody, "tr");
 
