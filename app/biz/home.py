@@ -109,7 +109,9 @@ def get_all_messages_in_date_range(start_date = None, end_date = None):
         query = 'SELECT * FROM messages WHERE message_date >= {} AND message_date <= {}'.format(start_date, end_date)
         results = execute_query(db_conn, query)
         rows = results.fetchall()
-
+        print("%s", rows[1])
+        rows[1] = change_Time_format(rows[1])
+        print("%s", rows[1])
         return rows
     except Exception as e:
         raise Exception(e)
@@ -141,3 +143,12 @@ def get_count_of_messages_in_date_range(start_date = None, end_date = None):
         return rows
     except Exception as e:
         raise Exception(e)
+
+# def change_time_format(time = None):
+#   date_time = time.strip()
+#   format_time = date_time[1].strptime(time, "%H:%M")
+#   formatted = date_time[0] + format_time.strftime("%I:%M %p")
+#   print()
+#   print(formatted)
+#   print()
+#   return formatted

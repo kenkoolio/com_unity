@@ -146,7 +146,7 @@
 
 <article>
   <div class="cont">
-    <h3>Michael Curry</h3>
+    <h6>Michael Curry</h6>
     <time>DEC 30, 2020</time>
   </div>
   <audio id="saved_audio" class="audio" controls="controls">
@@ -156,21 +156,50 @@
 
 <!-- table -->
 
-<div class="container" id="audio_log">
+<!-- <div class="container" id="audio_log"> -->
    <!-- <div class="col-lg-12"> -->
-   <h2 class="page-heading">Capsule Log</h2>
-   <div>
+   <!-- <h2 class="page-heading">Capsule Log</h2> -->
+   <!-- <div> -->
      <!-- search bar -->
      <div class="row pull-right input-group">
-       <span class="glyphicon glyphicon-search table-search-icon"></span>
-       <input class="table-search" type="text" placeholder="search...">
+       <!-- <span class="glyphicon glyphicon-search table-search-icon"></span> -->
+       <!-- <input class="table-search" type="text" placeholder="search..."> -->
      </div>
-     <!-- table -->
-      <table class="table table-hover table-bordered">
+
+      <!-- Text Messages -->
+      <div class="cont">
+      <table class="text_message">
+        <tbody>
+        {% for entry in rows %}
+        <tr>
+          <td class="mood">&#{{ entry[3] }}</td>
+          <td>
+            <p class="from-them">
+              {{ entry[1].strftime('%m/%d/%Y, %I:%M %p') }}<br />
+              {% if entry[4] %}
+              {{ entry[4] }},
+              {% else %}
+              Anonymous,
+              {% endif %}
+              age {{ entry[5] }}<br />
+              {{ entry[6] }}<br />
+            </p>
+          </td>
+          <td>
+            <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Play Audio</button>
+          </td>
+        </tr>
+        </tbody>
+        {% endfor %}
+      </table>
+      </div>
+
+      <!-- table -->
+<!--       <table class="table table-hover table-bordered">
          <thead align="Center">
             <tr>
-               <th>Mood</th>
                <th>Date</th>
+               <th>Mood</th>
                <th>Name</th>
                <th>Age</th>
                <th>Location</th>
@@ -178,7 +207,22 @@
             </tr>
          </thead>
          <tbody class="table-searchable">
-            <tr>
+            {% for entry in rows %}
+            <tr> -->
+              <!-- Date -->
+              <!-- <td>{{ entry[1] }}</td> -->
+              <!-- Emoji -->
+              <!-- <td>&#{{ entry[2] }}</td>  -->
+              <!-- Name -->
+              <!-- <td>{{ entry[3] }}</td> -->
+              <!-- Age -->
+              <!-- <td>{{ entry[4] }}</td> -->
+              <!-- Location -->
+              <!-- <td>{{ entry[5] }}</td> -->
+            <!-- </tr> -->
+            <!-- {% endfor %} -->
+<!--             <tr>
+               <td>&#128522</td>
                <td align="center">&#128522</td>
                <td>12/30/2020</td>
                <td>Trump</td>
@@ -192,14 +236,16 @@
                <td>Michael Curry</td>
                <td>52</td>
                <td>OR</td>
-               <td align="center"><button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Play Audio</button></td>
+               <td><button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Play</button></td>
+            </tr> -->
+<!--                <td align="center"><button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Play Audio</button></td>
             </tr>
          </tbody>
       </table>
-      <br>
-   </div>
-   <!-- </div> -->
-</div>
+      <br> -->
+    <!-- </div> -->
+ <!-- </div> -->
+<!-- </div> -->
 
 
 </body>
