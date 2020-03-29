@@ -3,6 +3,7 @@
 
 from __main__ import app
 from flask import render_template, request, redirect, jsonify, send_file
+from werkzeug.utils import secure_filename
 import os, sys
 import datetime
 
@@ -30,7 +31,7 @@ def home():
     '''
     try:
         rows = db_home.get_all_messages()
-        print("HURR", parent_dir_path)
+
         return render_template('index.html', rows=rows)
     except Exception as e:
         print('Error: Home page error: {}'.format(e))
@@ -43,7 +44,31 @@ def save_message():
     '''
     try:
         # get request data and send it to biz layer
-        db_home.create_new_message_and_voice(request.get_json())
+        # db_home.create_new_message_and_voice(request.get_json())
+
+        # print("HEEERE {}".format(request.files))
+        # print("HEEERE2 {}".format(request.form))
+        # print("HEEERE3 {}".format(request.data))
+        # print("HEEERE4 {}".format(request.values))
+
+        # save audio file to directory in app/static/voices/
+        f = request.files['audio']
+        filename = f.filename
+        filepath = 'voices/' + secure_filename(filename)
+        url = parent_dir_path + '/static/' + filepath
+        f.save(url)
+
+        print("HURR {}".format(filepath))
+
+        # save message details and audio blob to database
+        data = {}
+        data['mood'] = request.form['mood']
+        data['name'] = request.form['name']
+        data['age'] = request.form['age']
+        data['location'] = request.form['location']
+        data['audio'] = f
+        data['url'] = filepath
+        db_home.create_new_message_and_voice(data)
 
         return jsonify({'status': 'testing'})
         # return redirect('/')
