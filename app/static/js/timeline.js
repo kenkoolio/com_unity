@@ -462,6 +462,7 @@ function refreshMessages () {
             let name = (entry[4])? entry[4] : "Anonymous";
             let age = 213;
             let location = "location";
+            let messageID = entry[0];
     
             let bubbleText =
                 name + "\n" +
@@ -471,6 +472,11 @@ function refreshMessages () {
     
     
             let row = appendCellOfType(tbody, "tr");
+
+            // attache message ID and hide from view.
+            let hiddenMessageID = appendCellOfType(row, "td", messageID);
+            hiddenMessageID.style = "display:none;";
+
             let emoji = appendCellOfType(row, "td", emojistring); // replace 1 with emoji
             emoji.classList.add("mood");
     
