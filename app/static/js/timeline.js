@@ -2,10 +2,10 @@
 // <reference path="./p5.d.ts" />
 
 // hack code to scoot the timeline down under the above dom element
-var navbar = document.getElementById("navbar");
-var body = navbar.parentNode;
-var padding = navbar.offsetHeight;
-body.style.paddingTop = String(padding) + "px";
+// var navbar = document.getElementById("navbar");
+// var body = navbar.parentNode;
+// var padding = navbar.offsetHeight;
+// body.style.paddingTop = String(padding) + "px";
 
 
 var first = true; // draw once and then wait for mouse press.
@@ -60,8 +60,11 @@ function setup() {
 // returns an array with a from date and a to date.
 function selectedDates() {
     let dArr = [];
-    dArr.push(selectorLower.getDate());
+    dArr.push(selectorLower.getDate()); // to return Date objects
     dArr.push(selectorUpper.getDate());
+    dArr.push(selectorLower.getDate().toISOString().substring(0, 10)); // to return string of format '2020-3-28'
+    dArr.push(selectorUpper.getDate().toISOString().substring(0, 10));
+    
     return dArr;
 }
 
