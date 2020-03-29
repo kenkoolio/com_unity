@@ -39,13 +39,14 @@ function setup() {
     setXGradient(gradient, width - width / 9, 0, width / 9, timelineHeight, color('rgba(25, 25, 25, 0)'), color('rgba(25, 25, 25, 1)'));
 
     // create selectors
-    const segmentBorderMiddle = Math.ceil(width / 2 / zoom1SegmentWidth) * zoom1SegmentWidth;
-    let pu = segmentBorderMiddle - zoom1SegmentWidth;
+    const segmentBorderMiddle = Math.floor(width / 2 / zoom1SegmentWidth) * zoom1SegmentWidth;
+    let pu = segmentBorderMiddle + zoom1SegmentWidth;
     let pl = segmentBorderMiddle;
     selectorLower = new Selector(pu, 15, 0.5, 0.5);
     selectorUpper = new Selector(pl, timelineHeight - 15, timelineHeight - 0.5, timelineHeight - 0.5)
     selectors.push(selectorLower);
     selectors.push(selectorUpper);
+
 
     // create the dateline
     let today = new Date();
@@ -55,6 +56,13 @@ function setup() {
     let minDate = addDays(today, -1 * (daysVisible + daysLeftOfToday));
     let maxDate = addDays(today, daysVisible + daysRightOfToday);
     dateLine = new DateLine(minDate, maxDate);
+
+    // additional hack in case selectors land in the wrong place
+    let lowerSelectedDate = selectorLower.getDate();
+    if (lowerSelectedDate.toISOString() != today.toISOString()) {
+        selectorLower.tipX += zoom1SegmentWidth;
+        selectorUpper.tipX += zoom1SegmentWidth;
+    }
 }
 
 // returns an array with a from date and a to date.
@@ -457,7 +465,7 @@ function refreshMessages () {
         for (let entry of messages) {
             console.log(entry);
             let emojinum = entry[3];
-            let emojistring = emojinum.toString(16); // convert to hex string
+            let emojistring =  String.fromCodePoint(emojinum); // convert to hex string
             let datetime = entry[1];
             let name = (entry[4])? entry[4] : "Anonymous";
             let age = entry[5];
