@@ -34,6 +34,10 @@ $('input.table-search').parent().next()
 })
 });
 
+//push audio to front player
+$(document).on('click',"[title|='transfer_audio']", function() {
+  $('#saved_audio').attr("src", $(this).val());
+});
 
 
 //initialize button view sections
@@ -124,7 +128,3 @@ navigator.mediaDevices.getUserMedia(constraint)
 });
 
 
-// Media Player
-// $('audio').mediaelementplayer({
-// 	features: ['playpause','progress','current','tracks','fullscreen']
-// });
