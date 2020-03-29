@@ -32,10 +32,6 @@ def home():
     try:
         rows = db_home.get_all_messages()
         
-        for row in rows:
-          print()
-          print(row)
-          print()      
         return render_template('index.html', rows=rows)
     except Exception as e:
         print('Error: Home page error: {}'.format(e))
@@ -83,7 +79,7 @@ def get_all_messages_in_date_range():
         end_date = request.args.get('end')
 
         rows = db_home.get_all_messages_in_date_range(start_date, end_date)
-        print(rows)
+
         return jsonify(rows)
     except Exception as e:
         print('Error: Trying to get messages in date range: {}'.format(e))
