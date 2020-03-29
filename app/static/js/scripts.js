@@ -1,5 +1,18 @@
 //need to add document load ready
 
+function upload(blob) {
+  var xhr=new XMLHttpRequest();
+  xhr.onload=function(e) {
+      if(this.readyState === 4) {
+          console.log("Server returned: ",e.target.responseText);
+      }
+  };
+  var fd=new FormData();
+  fd.append("test.ogg",blob);
+  xhr.open("POST","/",true);
+  xhr.send(fd);
+}
+
 
 // search/filter functionality
 // citation: https://www.w3schools.com/bootstrap/bootstrap_filters.asp
@@ -68,6 +81,7 @@ navigator.mediaDevices.getUserMedia(constraint)
         let blob = new Blob(chunks, { 'type' : 'audio/ogg;' });
         chunks = []; //clear chunk array to inital state
         player.src = window.URL.createObjectURL(blob);
+        upload(blob);
     }
 
 })
