@@ -40,7 +40,7 @@ def home():
 @app.route('/messages', methods=['POST'])
 def save_message():
     '''
-    Saves voice recording data submitted by a user.
+    Route to saves voice recording data submitted by a user into file directory and into database.
     '''
     try:
         # save audio file to directory in app/static/voices/
@@ -69,7 +69,7 @@ def save_message():
 @app.route('/messages-in-range', methods=['GET'])
 def get_all_messages_in_date_range():
     '''
-    Gets all messages in date range.
+    Route to gets all messages in date range.
     Query arguments (required): start (date): start date of messages to retrieve.
                                 end (date): end date of messages to retrieve.
     Returns: Rows (json list): messages within specified range.
@@ -88,7 +88,7 @@ def get_all_messages_in_date_range():
 @app.route('/date-count', methods=['GET'])
 def get_count_of_messages_in_date_range():
     '''
-    Retrieves dates and counts of messages on each date between a specified date range.
+    Route to retrieve dates and counts of messages on each date between a specified date range.
     '''
     try:
         start_date = request.args.get('start')
@@ -104,23 +104,12 @@ def get_count_of_messages_in_date_range():
 @app.route('/voice-message-db', methods=['GET'])
 def get_voice_message_db():
     '''
-    Get voice message binary blob from database.
+    Route to get voice message binary blob from database.
     '''
     try:
         message_id = request.args.get('mid')
-        if not message_id:
-            raise Exception('Message ID required to get voice message.')
 
-        # connect to db
-        db_conn = connect_to_database()
-
-        # query db
-        query = 'SELECT messages.message_url, voice_message FROM messages \
-        JOIN voices ON messages.message_id = voices.message_id \
-        WHERE messages.message_id = {} LIMIT 1'.format(message_id)
-
-        results = execute_query(db_conn, query)
-        rows = results.fetchall()
+        rows = db_home.get_voice_message_db(message_id)
 
         return send_file(io.BytesIO(rows[0][1]), attachment_filename=rows[0][0], as_attachment=True, mimetype='audio/ogg')
     except Exception as e:
@@ -130,20 +119,12 @@ def get_voice_message_db():
 @app.route('/voice-message-fd', methods=['GET'])
 def get_voice_message_fd():
     '''
-    Get voice message binary blob from file directory.
+    Route to get voice message binary blob from file directory.
     '''
     try:
         message_id = request.args.get('mid')
-        if not message_id:
-            raise Exception('Message ID required to get voice message.')
 
-        # connect to db
-        db_conn = connect_to_database()
-
-        # query db
-        query = 'SELECT message_url FROM messages WHERE message_id = {} LIMIT 1'.format(message_id)
-        results = execute_query(db_conn, query)
-        rows = results.fetchall()
+        rows = db_home.get_voice_message_fd(message_id)
 
         path = rows[0][0]
         directory_path = parent_dir_path + '/static/'
