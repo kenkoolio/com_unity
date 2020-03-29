@@ -150,11 +150,12 @@
        <input class="table-search" type="text" placeholder="search...">
      </div>
 
+      <!-- Text Messages -->
       {% for entry in rows %}
-      <!-- Date -->
+      
       Mood: &#{{ entry[2] }}
       <p class="from-me">
-        Date: {{ entry[1] }}<br />
+        {{ entry[1] }}<br />
         {% if entry[3] %}
         {{ entry[3] }},
         {% else %}
@@ -163,7 +164,9 @@
         age {{ entry[4] }}<br />
         {{ entry[5] }}<br />
       </p>
+
       {% endfor %}
+
       <!-- table -->
       <table class="table table-hover table-bordered">
          <thead align="Center">
