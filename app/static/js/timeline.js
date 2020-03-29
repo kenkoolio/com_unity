@@ -453,6 +453,9 @@ function refreshMessages () {
     let lowDate = dates[2];
     let highDate = dates[3];
 
+    // create an array of all rows's bubbles so we can decolorize them upon selection
+    let allBubbles = [];
+
     // grab messages and populate table
     let req = new XMLHttpRequest();
     let route = "/messages-in-range?start='" + lowDate + "'&end='" + highDate + "'";
@@ -497,10 +500,21 @@ function refreshMessages () {
             let bubbleTextArea = appendCellOfType(bubble, "p", bubbleText);
             bubbleTextArea.classList.add("from-them");
             let bubbleButtonContainer = appendCellOfType(row, "td");
-            let bubbleButton = appendCellOfType(row, "button", "Play Audio");
+            let bubbleButton = appendCellOfType(bubbleButtonContainer, "button", "Play Audio");
             bubbleButton.classList.add("btn");
             bubbleButton.classList.add("btn-primary");
             bubbleButton.classList.add("btn-sm");
+
+            allBubbles.push(bubbleTextArea);
+            row.addEventListener("click", () => {
+                for (let bubble of allBubbles)
+                {
+                    bubble.style.backgroundColor = "#E5E5EA";
+                }
+                
+                bubbleTextArea.style.backgroundColor = "#0099ff";
+                //firePlayer(hiddenMessageID);
+            }, false);
     
             // missing modal thing from justin's code
         }
