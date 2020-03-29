@@ -9,4 +9,4 @@ venv/
 .venv/
 *.venv/
 **/.venv
-**/static/voices/*
+*.ogg
