@@ -33,11 +33,11 @@
 
   <!-- Navbar -->
   <nav id="navbar" class="navbar navbar-inverse navbar-fixed-top">
-  	<div class="container">
+  	<div class="container-fluid">
   		<div class="navbar-header">
   			<a href="index.html" class="navbar-brand"><span class="glyphicon glyphicon-music" aria-hidden="true"></span> com_unity</a>
   		</div>
-  		<ul class="nav navbar-nav navbar-right">
+  		<ul class="nav navbar-nav navbar-left">
   			<li><a data-toggle="modal" data-target="#updateModal">Record</a></li>
   			<li><a href="/about">About</a></li>
   		</ul>
@@ -65,10 +65,10 @@
                        	MOOD
                           <select id="mood_dropdown" name='mood'>
                           	  <option value="happy">&#128522</option>
-							  <option value="sad">&#128546</option>
-							  <option value="angry">&#128544</option>
-							  <option value="heart">&#128525</option>
-							  <option value="funny">&#128518</option>                          	
+              							  <option value="sad">&#128546</option>
+              							  <option value="angry">&#128544</option>
+              							  <option value="heart">&#128525</option>
+              							  <option value="funny">&#128518</option>                          	
                           </select>
                        </div>
                     </div>
@@ -82,7 +82,7 @@
                     <br>
 
                   <div class="row">
-                    <div class="col-lg-1 col-lg-offset-2">
+                    <div class="col-lg-1">
                        AGE<input type="text" name="age" required><br>
                     </div>
                   </div>
@@ -108,8 +108,11 @@
                        <span id="record_symbol" class="glyphicon glyphicon-stop"></span> Stop
                        </button><br>
                     </div>
+                    <br>
+                    <br>
+                    <br>
 
-	                  <div class="col-lg-2">
+	                  <div>
                        <audio controls hidden></audio>
 	                     <audio id = 'save' controls="" name='audio'></audio>
 	                  </div>
@@ -126,13 +129,62 @@
      </div>
   </div>
 
+<!-- timeline -->
 <div id="timeline"></div>
-<div>
-    <button type="button" id="zoomOut">Zoom Out</button>
-    <button type="button" id="prev">Prev</button>
-    <button type="button" id="next">Next</button>
-    <button type="button" id="zoomIn">Zoom In</button>
+<div class="btn-group" role="group" >
+    <button type="button" id="zoomOut" class="btn btn-info btn-sm">Zoom Out</button>
+    <button type="button" id="prev" class="btn btn-info btn-sm">Prev</button>
+    <button type="button" id="next" class="btn btn-info btn-sm">Next</button>
+    <button type="button" id="zoomIn" class="btn btn-info btn-sm">Zoom In</button>
 </div>
+
+<!-- table -->
+
+<div class="container" id="audio_log">
+   <!-- <div class="col-lg-12"> -->
+   <h2 class="page-heading">Capsule Log</h2>
+   <div>
+     <!-- search bar -->
+     <div class="row pull-right input-group">
+       <span class="glyphicon glyphicon-search table-search-icon"></span>
+       <input class="table-search" type="text" placeholder="search...">
+     </div>
+     <!-- table -->
+      <table class="table table-hover table-bordered">
+         <thead align="Center">
+            <tr>
+               <th>Mood</th>
+               <th>Date</th>
+               <th>Name</th>
+               <th>Age</th>
+               <th>Location</th>
+               <th>Audio</th>
+            </tr>
+         </thead>
+         <tbody class="table-searchable">
+            <tr>
+               <td>&#128522</td>
+               <td>12/30/2020</td>
+               <td>Trump</td>
+               <td>90</td>
+               <td>NJ</td>
+               <td><button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Play</button></td>
+            </tr>
+            <tr>
+               <td>&#128544</td>
+               <td>12/30/2020</td>
+               <td>Michael Curry</td>
+               <td>52</td>
+               <td>OR</td>
+               <td><button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Play</button></td>
+            </tr>
+         </tbody>
+      </table>
+      <br>
+   </div>
+   <!-- </div> -->
+</div>
+
 
 </body>
 

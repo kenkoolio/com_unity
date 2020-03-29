@@ -2,10 +2,10 @@
 // <reference path="./p5.d.ts" />
 
 // hack code to scoot the timeline down under the above dom element
-var navbar = document.getElementById("navbar");
-var body = navbar.parentNode;
-var padding = navbar.offsetHeight;
-body.style.paddingTop = String(padding) + "px";
+// var navbar = document.getElementById("navbar");
+// var body = navbar.parentNode;
+// var padding = navbar.offsetHeight;
+// body.style.paddingTop = String(padding) + "px";
 
 
 var first = true; // draw once and then wait for mouse press.

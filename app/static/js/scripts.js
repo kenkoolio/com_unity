@@ -1,5 +1,22 @@
 //need to add document load ready
 
+
+// search/filter functionality
+// citation: https://www.w3schools.com/bootstrap/bootstrap_filters.asp
+$('.table-search').first().on("keyup", function() {
+//grab input value
+let value = $(this).val().toLowerCase();
+
+// filter table rows by input value
+$('input.table-search').parent().next()
+.find('.table-searchable tr')
+.filter(function() {
+  $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+})
+});
+
+
+
 //initialize button view sections
 // let start_view = document.getElementById('rec_start_view').style.visibility; //start button
 // let stop_view = document.getElementById('rec_stop_view').style.visibility; //stop button
