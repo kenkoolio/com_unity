@@ -167,21 +167,26 @@
      </div>
 
       <!-- Text Messages -->
-      {% for entry in rows %}
+      <table>
+        {% for entry in rows %}
+        <tr>
+          <td class="mood">&#{{ entry[2] }}</td>
+          <td>
+            <p class="from-me">
+              {{ entry[1] }}<br />
+              {% if entry[3] %}
+              {{ entry[3] }},
+              {% else %}
+              Anonymous,
+              {% endif %}
+              age {{ entry[4] }}<br />
+              {{ entry[5] }}<br />
+            </p>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
       
-      Mood: &#{{ entry[2] }}
-      <p class="from-me">
-        {{ entry[1] }}<br />
-        {% if entry[3] %}
-        {{ entry[3] }},
-        {% else %}
-        Anonymous,
-        {% endif %}
-        age {{ entry[4] }}<br />
-        {{ entry[5] }}<br />
-      </p>
-
-      {% endfor %}
 
       <!-- table -->
       <table class="table table-hover table-bordered">
