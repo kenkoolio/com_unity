@@ -31,7 +31,7 @@ def home():
     '''
     try:
         rows = db_home.get_all_messages()
-        
+
         return render_template('index.html', rows=rows)
     except Exception as e:
         print('Error: Home page error: {}'.format(e))
