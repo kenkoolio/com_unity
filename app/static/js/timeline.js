@@ -41,7 +41,7 @@ function setup() {
     // create selectors
     const segmentBorderMiddle = Math.floor(width / 2 / zoom1SegmentWidth) * zoom1SegmentWidth;
     let pu = segmentBorderMiddle + zoom1SegmentWidth;
-    let pl = segmentBorderMiddle;
+    let pl = segmentBorderMiddle - zoom1SegmentWidth;
     selectorLower = new Selector(pu, 15, 0.5, 0.5);
     selectorUpper = new Selector(pl, timelineHeight - 15, timelineHeight - 0.5, timelineHeight - 0.5)
     selectors.push(selectorLower);
