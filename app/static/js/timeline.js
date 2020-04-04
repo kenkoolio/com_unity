@@ -24,6 +24,7 @@ var visibleMinDate;
 var zoomLevel = 1; // 1 = close enough to view individual days clearly, 2 = months view, 3 = years view, 4 = decades view
 const zoom1SegmentWidth = 6;
 
+var month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
 function setup() {
     textFont('Georgia');
@@ -193,6 +194,9 @@ class DateLine {
         this.x = -this.cleanSegmentWidth;
         this.y = 0;
 
+        this.cleanSegments = Math.floor(width / zoom1SegmentWidth);
+        this.cleanSegmentWidth = this.cleanSegments * zoom1SegmentWidth;
+
         this.recreate();
     }
 
@@ -215,18 +219,23 @@ class DateLine {
             }
             this.x = -this.cleanSegmentWidth;
         }
-        this.cleanSegments = Math.floor(width / zoom1SegmentWidth);
-        this.cleanSegmentWidth = this.cleanSegments * zoom1SegmentWidth;
-        this.image = createGraphics(this.cleanSegmentWidth * 3, timelineHeight);
 
+        // create blank canvas to hold refreshed image
+        // this.newImage = createGraphics(this.cleanSegmentWidth * 3, timelineHeight);
+        //let dl = this.newImage;
+        this.image = createGraphics(this.cleanSegmentWidth * 3, timelineHeight);
         let dl = this.image;
-        let currDate = new Date(this.dateLow);
-        let currPixel = 0.5; // if stroke weight is odd, you must offset by half pixel to fill pixel.
         dl.stroke(0);
         dl.fill(0);
         dl.strokeWeight(1);
         dl.textFont('Verdana');
-        let month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
+        // if this is the first refresh, image needs to be shown before the update
+        // if (this.image === undefined)
+        //     this.image = this.newImage;
+        
+        // set the lowest date retreived from the database so we know where to start iterating.
+        let currDate = new Date(this.dateLow);
 
         // get counts of all entries in range from server
         //Open the POST request
@@ -240,9 +249,12 @@ class DateLine {
             {
             if (req.readyState == 4 && req.status == 200)
             {
+                // get messages from database
                 let messages = JSON.parse(req.responseText);
                 let messageMap = {};
                 let maxMessage = 5;
+                let currPixel = 0.5; // if stroke weight is odd, you must offset by half pixel to fill pixel.
+
                 for (let m of messages) {
                     messageMap[m[0]] = m[1];
                     if (m[1] > maxMessage)
@@ -308,6 +320,8 @@ class DateLine {
                         currDate = addDays(currDate, 1);
                     }
                 }
+
+                this.image = dl; // here if we ever switch to using a separate refresh canvas.
                 first = true;
             }
             // else

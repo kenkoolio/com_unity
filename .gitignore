@@ -10,3 +10,6 @@ venv/
 *.venv/
 **/.venv
 **/*.ogg
+lib/Flask-1.1.1.dist-info/INSTALLER
+lib
+venv - Copy

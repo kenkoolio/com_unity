@@ -4,16 +4,22 @@
 
 # TODO: Sanitize the queries to properly use .execute() instead of string interpolation to avoid SQL injections
 
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
+#import mysql.connector as mariadb
+#import mariadb as MySQLdb
 import MySQLdb
 import os
 
 # get database credentials from .env
-load_dotenv()
-USERNAME = os.getenv("USERNAME")
-PASSWORD = os.getenv("PASSWORD")
-HOST = os.getenv("HOST")
-DB_NAME = os.getenv("DB_NAME")
+# load_dotenv()
+# USERNAME = os.getenv("USERNAME")
+# PASSWORD = os.getenv("PASSWORD")
+# HOST = os.getenv("HOST")
+# DB_NAME = os.getenv("DB_NAME")
+USERNAME="noah"
+PASSWORD="noahnoahnoah"
+HOST=""
+DB_NAME="com_unity"
 
 
 def connect_to_database(host = HOST, user = USERNAME, passwd = PASSWORD, db = DB_NAME):
